@@ -1,65 +1,182 @@
-# Assignment 1 (Week 3, Day 1): Setting Up React.js with Vite
+# Assignment (Week 3, Day 1): Setting Up React.js from Scratch with Webpack and Babel
 
 ## Objective
 
-- Learn how to create a React.js project using Vite as a build tool.
-- Practice initial project configuration and basic React component structure.
-- Gain familiarity with running and bundling a React project quickly.
+- Learn how to set up a **React.js** project **manually** without using create-react-app.
+
+- Configure **Webpack** and **Babel** to bundle and transpile modern JavaScript (including JSX).
+
+- Verify that a simple React component can render in the browser.
 
 ## Instructions
 
-### Part 1: Initialize a Vite React Project
+### Part 1: Project Initialization and Dependencies
 
 1. **Create a New Folder**
-   - Name it something like `react-vite-setup`.
-2. **Set Up with Vite**
-   - Use Vite’s recommended method for initializing a React project (for example, the `npm create vite@latest` approach).
-3. **Install Dependencies**
-   - After the setup, ensure your `package.json` includes React and ReactDOM dependencies.
 
-### Part 2: Explore the Project Structure
+   - Make a folder named `react-webpack-babel-setup` (or a similar descriptive name).
 
-4. **Open the Project**
-   - Note where the main entry file (e.g., `main.jsx` or `main.js`) is located.
-   - Identify the default `App.jsx` (or similarly named) component.
-5. **Run the Development Server**
-   - Use the appropriate script (often `npm run dev`) to start the local server.
-   - Check that you can load your React app in the browser.
+   - Initialize a new Node.js project by running `npm init -y` inside that folder.
 
-### Part 3: Create or Modify a Simple Component
+2. **Install React and Other Dependencies**
 
-6. **Edit `App.jsx`**
-   - Replace or modify the default content with something meaningful (e.g., a heading, a paragraph about what you learned, or a simple button).
-7. **Confirm It Works**
-   - Reload the app in your browser and ensure your changes are visible.
+   - Install React and React DOM as regular dependencies:
 
-### Part 4: Build for Production (Optional Check)
+     ```bash
+     npm install react react-dom
+     ```
 
-8. **Build the Project**
-   - Run the build script (typically `npm run build`) to generate a production-ready folder (e.g., `dist`).
-9. **Inspect Output**
-   - Note how your original files are bundled and optimized for production.
+   - Install Webpack and Babel as development dependencies:
+
+     ```bash
+     npm install --save-dev webpack webpack-cli babel-loader @babel/core @babel/preset-env @babel/preset-react
+     ```
+
+3. **Confirm package.json**
+
+   - Open `package.json` and confirm that `react` and `react-dom` are in **dependencies**, and Webpack/Babel packages are in **devDependencies**.
+
+### Part 2: Basic Webpack and Babel Configuration
+
+4. **Create `webpack.config.js`**
+
+   - In the root of your folder, create a file named `webpack.config.js` with the following starter content:
+
+     ```js
+     const path = require("path");
+
+     module.exports = {
+       entry: "./src/index.js",
+       output: {
+         path: path.resolve(__dirname, "dist"),
+         filename: "bundle.js",
+       },
+       module: {
+         rules: [
+           {
+             test: /\.js$/,
+             exclude: /node_modules/,
+             use: {
+               loader: "babel-loader",
+             },
+           },
+         ],
+       },
+       mode: "development", // or 'production'
+     };
+     ```
+
+5. **Set Up Babel**
+
+   - Create a file named `.babelrc` (or `babel.config.json`) in the project root:
+
+     ```json
+     {
+       "presets": ["@babel/preset-env", "@babel/preset-react"]
+     }
+     ```
+
+### Part 3: Create and Bundle a React Component
+
+6. **Create Your Source Files**
+
+   - Inside a new folder called `src`, create two files:
+
+     - `index.js`
+
+     - `App.js`
+
+   - **`App.js`** (simple React component):
+
+     ```js
+     import React from "react";
+
+     function App() {
+       return (
+         <div>
+           <h1>Hello from a Manually Setup React App!</h1>
+         </div>
+       );
+     }
+
+     export default App;
+     ```
+
+   - **`index.js`** (entry point):
+
+     ```js
+     import React from "react";
+     import ReactDOM from "react-dom/client";
+     import App from "./App";
+
+     const root = ReactDOM.createRoot(document.getElementById("root"));
+     root.render(<App />);
+     ```
+
+7. **Create an HTML File**
+
+   - In the **root** folder (or a separate `public` folder if you prefer), create `index.html`:
+
+     ```html
+     <!DOCTYPE html>
+     <html lang="en">
+       <head>
+         <meta charset="UTF-8" />
+         <meta
+           name="viewport"
+           content="width=device-width, initial-scale=1.0"
+         />
+         <title>Manual React Setup</title>
+       </head>
+       <body>
+         <div id="root"></div>
+         <script src="dist/bundle.js"></script>
+       </body>
+     </html>
+     ```
+
+### Part 4: Build and Test
+
+8. **Add a Build Script**
+
+   - In your `package.json`, under `scripts`, add:
+
+     ```json
+     "scripts": {
+       "build": "webpack"
+     }
+     ```
+
+   - Run `npm run build`. This should create a `dist` folder containing `bundle.js`.
+
+9. **Open `index.html`**
+
+   - Open `index.html` in your browser (via a simple local server or directly in the file system).
+
+   - Confirm you see “Hello from a Manually Setup React App!” on the page.
 
 ---
 
 ## Submission
 
-- **GitHub Repository**
-  1. Create a repository named `react-vite-setup`.
-  2. Commit and push your entire project, including:
-     - `package.json` and `package-lock.json`
-     - Any Vite config files
-     - The `src` folder (with your React components)
-  3. Provide your GitHub repository URL for review.
+- **GitHub Repository**:
+
+  - Name the repository `react-webpack-babel`.
+
+  - Include all files (`src`, `webpack.config.js`, `.babelrc`, `index.html`, etc.).
+
+- **Submission Link**:
+
+  - Provide a link to your GitHub repository.
 
 ---
 
 ## Rubric
 
-| Criteria                              | Limited (0 pts)                                   | Partial (3 pts)                                              | Complete (5 pts)                                                                     |
-| ------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| **1. Project Initialization**         | Did not create or initialize a Vite React project | Project created but with errors or incomplete dependencies   | Project successfully initialized with React and all necessary dependencies installed |
-| **2. React Component Usage**          | No custom or modified component created           | Basic component created but incomplete or not rendering      | Clear modification or creation of a React component that renders without errors      |
-| **3. Development & Build Scripts**    | Did not run dev server or no build attempted      | Dev server runs, but build process untested or incomplete    | Successfully runs dev server and generates a production build (e.g., `dist` folder)  |
-| **4. Code Organization & Clarity**    | Poorly organized files; unclear structure         | Some organization, but minor confusion in folder/file naming | Well-structured project with logical file/folder organization                        |
-| **5. Deployment & GitHub Submission** | Repo or link not provided                         | Repo exists but missing required files or incomplete commits | Complete repo with all source files, properly committed and submitted as instructed  |
+| Criteria                          | Limited (0 pts)                                         | Partial (10 pts)                                              | Complete (20 pts)                                                  |
+| --------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------ |
+| **Webpack & Babel Configuration** | No config or incorrect setup; cannot build successfully | Partial config; builds with errors or warnings                | Correct config; project builds successfully without major errors   |
+| **React Component Creation**      | No usable components or code does not compile           | Basic component(s) created but missing key functionality      | Clear, functional component(s) that compile and render as expected |
+| **File & Folder Structure**       | Files missing or disorganized                           | Basic organization but some files out of place                | Logical structure (`src`, `dist`, etc.); easy to navigate          |
+| **Successful Build & Output**     | Project doesn’t build or run in the browser             | Build succeeds but output not fully functional in the browser | Build and bundle succeed; content loads correctly in the browser   |
+| **Code Quality and Organization** | Code is hard to follow or uses poor naming conventions  | Code somewhat clear but lacks consistent style or structure   | Code follows best practices, is well-organized, and easy to read   |
