@@ -37,7 +37,7 @@
 2. **Check for Errors**
    - Make sure the console is free of animation or library-related errors.
 3. **Polish**
-   - Tweak any design inconsistencies (e.g., mismatched colors) to present a cohesive style.
+   - Tweak any design inconsistencies (mismatched colors) to present a cohesive style.
 
 ---
 
