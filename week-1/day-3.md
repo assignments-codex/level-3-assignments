@@ -8,73 +8,97 @@
 
 ## Instructions
 
-### Part 1: Project Setup
+Thought for a couple of seconds
 
-1. **Create a New Folder**
-   - Name it `js-modules-practice`.
-   - Open your terminal in this folder.
+### **Assignment — ES Modules Edition**
+
+---
+
+## Part 1 · Project Setup
+
+1. **Create a project folder**
+
+   ```bash
+   mkdir js‑modules‑practice
+   cd js‑modules‑practice
+   ```
+
 2. **Initialize NPM**
 
-   - Run:
+   ```bash
+   npm init -y
+   ```
 
-     `npm init -y`
+3. **Enable ES modules**
+   Add `"type": "module"` to the root of `package.json`:
 
-   - This creates a `package.json` file (you may already be familiar with this from Day 2).
+   ```jsonc
+   {
+     "name": "js-modules-practice",
+     "version": "1.0.0",
+     "type": "module"
+   }
+   ```
 
-### Part 2: Create a Utility Module
+---
 
-1. **Create `mathUtils.js`**
+## Part 2 · Utility Modules
 
-   - Export at least two functions, e.g., `add(a, b)` and `subtract(a, b)`.
-   - Example:
+Create two files in the project root:
 
-     `// mathUtils.js function add(a, b) {   return a + b; }  function subtract(a, b) {   return a - b; }  module.exports = {   add,   subtract };`
+| File                 | Minimum requirement                                                    |
+| -------------------- | ---------------------------------------------------------------------- |
+| **`mathUtils.js`**   | Export at least two math functions using `export` syntax               |
+| **`stringUtils.js`** | Export at least one string‑manipulation function using `export` syntax |
 
-2. **Create `stringUtils.js`**
+_No starter code is provided—demonstrate your own implementation._
 
-   - Export at least one function, e.g., `capitalize(str)` or `reverseString(str)`.
-   - Example:
+---
 
+## Part 3 · Main Script
 
-     `// stringUtils.js function capitalize(str) {   return str.charAt(0).toUpperCase() + str.slice(1); }  module.exports = {   capitalize };`
+Create **`index.js`** that:
 
-### Part 3: Build a Main Script
+1. Imports the functions from both utility modules using ES `import` syntax.
 
-1. **Create `index.js`**
+2. Calls each function at least once and logs the results to the console.
 
-   - Import functions from `mathUtils.js` and `stringUtils.js`.
-   - Example:
+Run with:
 
+```bash
+node index.js
+```
 
-     `` const { add, subtract } = require('./mathUtils'); const { capitalize } = require('./stringUtils');  const num1 = 5; const num2 = 10; console.log(`Adding: ${num1} + ${num2} =`, add(num1, num2)); console.log(`Subtracting: ${num2} - ${num1} =`, subtract(num2, num1));  const phrase = "hello from node modules!"; console.log("Original:", phrase); console.log("Capitalized:", capitalize(phrase)); ``
+---
 
-2. **Run Your Program**
+## Part 4 · Conceptual Reflection
 
-   - In your terminal, execute:
+Use **`README.md`** (not a separate file) to answer **both** prompts in 1–3 concise sentences each:
 
-     `node index.js`
+1. **`export` / `import` vs `module.exports` / `require`**
 
-   - Verify the output for both the math operations and the string manipulation.
+   - Describe one key technical difference.
 
-### Part 4: Experiment & Extend (Optional)
+2. **Why choose ES modules for modern Node projects?**
 
-- Add **more utility functions** (e.g., multiply, divide, or advanced string methods).
-- Create a **new module** (e.g., `arrayUtils.js`) and import it into `index.js`.
-- If you want to go further, try using a **third-party library** from Day 2 (like Lodash) in one of your utility modules.
+   - State one clear reason.
+
+---
 
 ## Submission
 
-- **GitHub Repository** (Optional):
-  - Create a repository named `js-modules-practice`.
-  - Commit and push your `index.js`, `mathUtils.js`, `stringUtils.js`, and `package.json`.
-- **Submission Link**:
-  - Provide the GitHub repo link.
+1. Push **all project files** (`package.json`, `mathUtils.js`, `stringUtils.js`, `index.js`, `README.md`) to a GitHub repo named **`js-modules-practice`**.
 
-## Rubric
+2. Share the repository link.
 
-| Criteria                        | Limited (0 pts)                                 | Partial (3 pts)                                                         | Complete (5 pts)                                                                 |
-| ------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| **Module Creation**             | No separate modules created                     | Modules created but incomplete or incorrectly structured                | Separate modules (`mathUtils.js`, `stringUtils.js`) created with correct exports |
-| **Import/Export Usage**         | No imports/exports used or incorrectly used     | Imports/exports used but with errors or missing functionality           | Correctly imports/exports functions and demonstrates usage in `index.js`         |
-| **Functionality**               | Functions do not run or yield incorrect results | Functions run but partially, or do not cover basic math/string examples | Functions produce correct results for both math and string utilities             |
-| **Code Quality & Organization** | Code is difficult to read or poorly structured  | Code is somewhat organized but could be cleaner                         | Code is well-organized, easy to read, and logically separated across modules     |
+---
+
+## Rubric · 25 pts
+
+| #   | Criteria                        | Limited (0 pts)                 | Partial (10 pts)                        | Complete (20 pts)                                                          |
+| --- | ------------------------------- | ------------------------------- | --------------------------------------- | -------------------------------------------------------------------------- |
+| 1   | **Module Creation**             | Files missing                   | Files exist but lack valid `export`s    | `mathUtils.js` and `stringUtils.js` present with proper ES `export`s       |
+| 2   | **Import Usage**                | No imports or wrong syntax      | Imports compile but incomplete          | Correct ES `import` statements used in `index.js`                          |
+| 3   | **Functionality**               | Code crashes / wrong output     | Runs but some outputs incorrect         | All functions run and produce expected results                             |
+| 4   | **Code Quality & Organization** | Unreadable or disorganized      | Adequate but inconsistent style         | Clear, idiomatic ES6 code; logical file structure                          |
+| 5   | **Conceptual Understanding**    | Missing or off‑topic reflection | Reflection present but vague/inaccurate | README accurately explains ES modules vs CommonJS and justifies ES modules |
