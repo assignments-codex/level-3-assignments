@@ -32,13 +32,15 @@ Thought for a couple of seconds
 3. **Enable ES modules**
    Add `"type": "module"` to the root of `package.json`:
 
-   ```jsonc
-   {
-     "name": "js-modules-practice",
-     "version": "1.0.0",
-     "type": "module"
-   }
-   ```
+- Example of where it could be placed in your package.json. (You only need one line out of this snippet, not every part of it.)
+
+  ```jsonc
+  {
+    "name": "js-modules-practice",
+    "type": "module",
+    "version": "1.0.0"
+  }
+  ```
 
 ---
 
@@ -51,7 +53,7 @@ Create two files in the project root:
 | **`mathUtils.js`**   | Export at least two math functions using `export` syntax               |
 | **`stringUtils.js`** | Export at least one string‑manipulation function using `export` syntax |
 
-_No starter code is provided—demonstrate your own implementation._
+
 
 ---
 
