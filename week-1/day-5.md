@@ -8,76 +8,63 @@
 
 ## Instructions
 
-### Part 1: Project Initialization
+### Part 1: Project Setup
 
-1. **Create a New Folder**
-   - Name it `node-review`.
-   - Open your terminal in this folder.
-2. **Initialize NPM**
+- Use your existing project folder named `node-review`.
+- Ensure your `package.json` includes
+  ```json
+  "type": "module"
+  ```
+  so you can use `import`/`export` syntax.
 
-   - Run:
+---
 
-     `npm init -y`
+### Part 2: Custom Module (`utils.js`)
 
-   - Confirm a `package.json` file is created.
+- Create a file named `utils.js`.
+- Export **two** utility functions of your choice (e.g. greeting, string/array transformer).
 
-### Part 2: Combine Previous Concepts
+---
 
-1. **Create a Main Script**
-   - Name it `app.js`.
-   - This script should do **all** of the following:
-     - Import and use a **custom module** (e.g., a `utils.js` file).
-     - Use one **third-party package** (Lodash or Inquirer, etc.).
-2. **Write a Custom Module**
-   - Name it `utils.js`.
-   - Export at least one function. For example, a function that returns a greeting message or manipulates an array/string.
+### Part 3: Main Script (`app.js`)
 
-### Part 3: Implement the Logic
+- Create `app.js`.
+- Import your utilities from `utils.js` using ES Module syntax.
+- Install and import **one** third‑party package (e.g. `lodash` or `inquirer`).
+- Call each of your custom functions and demonstrate a feature from your chosen package.
 
-1. **In `app.js`,**
+---
 
-   - Require (`const ... = require(...)`) the function from `utils.js`.
-   - Install and require a third-party package (e.g., `lodash` or `inquirer`).
-   - Use **both** the custom module’s function **and** the third-party package in some way:
+### Part 4: NPM Script
 
-     `// app.js const { myUtility } = require('./utils'); const _ = require('lodash'); // Example using Lodash  // Custom function usage console.log("My Utility Output:", myUtility("Hello World"));  // Third-party package usage (Lodash example) const nums = [4, 5, 6, 7]; const reversed = _.reverse([...nums]); console.log("Original:", nums); console.log("Reversed:", reversed);`
+- In `package.json`, add a `"start"` script to run `app.js`.
+- Verify with:
+  ```bash
+  npm start
+  ```
+  that it runs without errors.
 
-   - (If you choose Inquirer, prompt the user for input and then pass the result to your utility function.)
+---
 
-### Part 4: Add NPM Scripts (Optional Enhancement)
+### Part 5: Submission Requirements
 
-2. **In `package.json`,**
+1. **GitHub Repository (required):**
+   - Create a public repo named `node-review`.
+   - Push **all** project files (`package.json`, `utils.js`, `app.js`, etc.).
+   - Submit the **repo link**.
+2. **Evidence of Success:**
+   - Include a screenshot or terminal log showing:
+     - Your project’s folder structure.
+     - Successful execution of `npm start`.
 
-   - Under `"scripts"`, add a `"start"` script to run `app.js`:
+---
 
-     `"scripts": {   "start": "node app.js" }`
+### Grading Rubric
 
-3. **Test the Script**
-
-   - Run:
-
-     `npm start`
-
-   - Verify everything works as expected.
-
-### Part 5: Show Your Work (Screenshot or Logs)
-
-- Capture a screenshot (if requested) or copy/paste the **terminal output** showing:
-  1. The project folder structure.
-  2. Successful run of `npm start` or `node app.js`.
-
-## Submission
-
-- **GitHub Repository** (Optional):
-  - Create a repo named `node-review` and upload your code.
-- **Submission Link**:
-  - Provide the GitHub repo link.
-
-## Rubric
-
-| Criteria                                 | Limited (0 pts)                                        | Partial (3 pts)                                     | Complete (5 pts)                                                           |
-| ---------------------------------------- | ------------------------------------------------------ | --------------------------------------------------- | -------------------------------------------------------------------------- |
-| **NPM Project Setup**                    | No package.json or script usage                        | package.json exists but minimal scripts             | Proper package.json with at least a start script                           |
-| **Custom Module & Import**               | No custom module created or incorrect module usage     | Custom module created but partially implemented     | Custom module properly exports/imports a function                          |
-| **Third-Party Package Usage**            | No third-party package or incorrect usage              | Installed but poorly implemented or minimal usage   | Correctly installs and uses a package (Lodash, Inquirer, etc.) in the code |
-| **Overall Functionality & Organization** | Script doesn’t run, errors present, or code is unclear | Script runs but partial functionality or messy code | Script runs, code is organized, and all features work as intended          |
+| Criterion                     | Missing / Incorrect         | Partially Complete                               | Fully Complete (25 pts)                                   |
+| ----------------------------- | --------------------------- | ------------------------------------------------ | --------------------------------------------------------- |
+| **ES Module Setup**           | Still using CommonJS        | `"type":"module"` added but not fully functional | ES Modules enabled and working correctly                  |
+| **Custom Module & Imports**   | No `utils.js` or no exports | Functions exist but not correctly imported/used  | Two functions exported, imported, and used correctly      |
+| **Third‑Party Package Usage** | Not installed or unused     | Installed but usage is minimal or incorrect      | Correct installation and meaningful feature demonstration |
+| **Start Script**              | Missing or fails to run     | Exists but errors remain                         | Runs cleanly with `npm start`                             |
+| **GitHub Repo Submission**    | No repo link provided       | Repo exists but missing files or link broken     | Public repo link provided with all files & clear README   |
