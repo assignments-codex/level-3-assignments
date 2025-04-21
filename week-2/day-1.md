@@ -56,28 +56,22 @@ npm install --save-dev webpack webpack-cli
 
 3. **Populate Them with ES Modules**
 
-````js
-
+```js
 export function sayHello(name) {
-      return `Hello, ${name}!`;
- }
+  return `Hello, ${name}!`;
+}
 
 export function sayGoodbye(name) {
-   return `Goodbye, ${name}!`;
-   }
-   ```
-
-```js
-
-import { sayHello, sayGoodbye } from './greetings.js';
-
-console.log(sayHello('Webpack'));
-    console.log(sayGoodbye('Webpack'));
+  return `Goodbye, ${name}!`;
+}
 ```
 
+```js
+import { sayHello, sayGoodbye } from "./greetings.js";
 
-
----
+console.log(sayHello("Webpack"));
+console.log(sayGoodbye("Webpack"));
+```
 
 ### Part 4: Basic Webpack Configuration (ES Modules)
 
@@ -103,16 +97,12 @@ export default {
       },
       mode: 'development'
     };
- ```
-
-
-
----
+```
 
 ### Part 5: Build & Test
 
 1. **Add a Build Script**
-    In `package.json` → `"scripts"`:
+   In `package.json` → `"scripts"`:
 
 `json
    "scripts": {
@@ -130,33 +120,34 @@ export default {
 
 - Check the terminal for errors; inspect `bundle.js` if needed.
 
-
-
----
-
 ### Part 6: Verify in a Browser
 
 1. **Create** `index.html` **in the root**:
 
-`html
-   <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="UTF-8" />
-        <title>Webpack Intro</title>
-      </head>
-      <body>
-        <script src="./dist/bundle.js"></script>
-      </body>
-    </html>
-    `
+```html
+<!DOCTYPE html>
+
+<html>
+       
+  <head>
+           
+    <meta charset="UTF-8" />
+           
+    <title>Webpack Intro</title>
+         
+  </head>
+       
+  <body>
+           
+    <script src="./dist/bundle.js"></script>
+         
+  </body>
+     
+</html>
+```
 
 2. **Open** `index.html` **in your browser**  
-    – Watch the console for “Hello, Webpack!” and “Goodbye, Webpack!”
-
-
-
----
+       – Watch the console for “Hello, Webpack!” and “Goodbye, Webpack!”
 
 ## Submission
 
@@ -174,10 +165,6 @@ export default {
 
 3. **Submit** the repo link on the assignment platform.
 
-
-
----
-
 ## Rubric
 
 | Criteria                           | 0 pts                      | 10 pts                                  | 20 pts                                                               |
@@ -187,7 +174,3 @@ export default {
 | **Bundling & Scripts**             | No build script or fails   | Builds with warnings or partial output  | `npm run build` succeeds, produces valid `dist/bundle.js`            |
 | **Code Organization & Execution**  | Errors or no console logs  | Runs but minor import/export issues     | Clean ES modules, logs correct output, demonstrates imports/exports  |
 | ** Browser Test**                  | Not attempted              | Opened but no console verification      | Successfully tested in-browser; console shows expected messages      |
-|                                    |                            |                                         |                                                                      |
-
-###
-````
