@@ -2,7 +2,7 @@
 
 ## Objective
 
-- Understand what Webpack is and why it’s used in modern web development.
+- Understand what Webpack is and why it's used in modern web development.
 - Set up a basic Webpack configuration to bundle multiple JavaScript files into one output.
 
 ## Instructions
@@ -10,108 +10,167 @@
 ### Part 1: Project Initialization
 
 1. **Create a New Folder**
-   - Name it `webpack-intro`.
-   - Open your terminal inside this folder.
+
+- Name it `webpack-intro`.
+
+- Open your terminal in that folder.
+
 2. **Initialize NPM**
 
-   - Run:
+`bash
+    npm init -y
+`
 
-     `npm init -y`
+This creates a `package.json`.
 
-   - Confirm that a `package.json` file is created in your folder.
+3. **Enable ES Modules**
+   In your `package.json`, add `"type": "module"` at the top level:
+
+`jsonc
+    {
+      "type": "module",
+      }
+`
+
+---
 
 ### Part 2: Install Webpack
 
-1. **Install Webpack & Webpack CLI**
+```bash
+npm install --save-dev webpack webpack-cli
+```
 
-   - Run:
+> Verify that `webpack` and `webpack-cli` appear under `devDependencies` in `package.json`.
 
-     `npm install --save-dev webpack webpack-cli`
-
-   - Verify that `webpack` and `webpack-cli` appear under `devDependencies` in `package.json`.
+---
 
 ### Part 3: Create Your Source Files
 
-2. **Make a `src` Folder**
-   - Inside `webpack-intro`, create a folder named `src`.
-3. **Add JavaScript Files**
-   - Within `src`, create two files:
-     - `index.js`
-     - `greetings.js`
-4. **Populate the Files**
+1. **Make a `src/` Folder**
 
-   - `greetings.js`:
+2. **Add Two Files**
 
-     `` export function sayHello(name) {   return `Hello, ${name}!`; }  export function sayGoodbye(name) {   return `Goodbye, ${name}!`; } ``
+- `src/greetings.js`
 
-   - `index.js`:
+- `src/index.js`
 
-     `import { sayHello, sayGoodbye } from './greetings.js';  console.log(sayHello("Webpack")); console.log(sayGoodbye("Webpack"));`
+3. **Populate Them with ES Modules**
 
-### Part 4: Basic Webpack Configuration
+```js
+export function sayHello(name) {
+  return `Hello, ${name}!`;
+}
 
-5. **Create `webpack.config.js`**
+export function sayGoodbye(name) {
+  return `Goodbye, ${name}!`;
+}
+```
 
-   - At the root of `webpack-intro`, create a file named `webpack.config.js`:
+```js
+import { sayHello, sayGoodbye } from "./greetings.js";
 
-     `const path = require('path');  module.exports = {   entry: './src/index.js',   output: {     path: path.resolve(__dirname, 'dist'),     filename: 'bundle.js'   },   mode: 'development' };`
+console.log(sayHello("Webpack"));
+console.log(sayGoodbye("Webpack"));
+```
 
-   - **Explanation**:
-     - `entry` specifies the main JavaScript file (`index.js`).
-     - `output` defines the bundle’s destination (`dist/bundle.js`).
-     - `mode: 'development'` enables easier debugging.
+### Part 4: Basic Webpack Configuration (ES Modules)
 
-### Part 5: Run Webpack & Test
+1. **Create** `webpack.config.js` **at the project root**
 
-6. **Add a Build Script**
+2. **Use ES Module Syntax** (requires `"type": "module"` in `package.json`):
 
-   - In `package.json`, under `"scripts"`, add:
+```js
 
-     `"scripts": {   "build": "webpack" }`
+import path from 'path';
+    import { fileURLToPath } from 'url';
 
-7. **Build the Project**
 
-   - Run:
 
-     `npm run build`
+const **filename = fileURLToPath(import.meta.url);
+   const **dirname = path.dirname(\_\_filename);
 
-   - A `dist` folder should appear, containing `bundle.js`.
+export default {
+    entry: './src/index.js',
+    output: {
+      path: path.resolve(\_\_dirname, 'dist'),
+       filename: 'bundle.js'
+      },
+      mode: 'development'
+    };
+```
 
-8. **Verify Output**
-   - Optionally inspect `dist/bundle.js` (it may look minified).
-   - Check the terminal for any errors or warnings.
+### Part 5: Build & Test
 
-### Part 6: (Optional) Test in a Browser
+1. **Add a Build Script**
+   In `package.json` → `"scripts"`:
 
-9. **Create a Basic HTML File**
+`json
+   "scripts": {
+    "build": "webpack"
+   }
+    `
 
-   - In the root directory, create `index.html`:
+2. **Run the Build**
 
-     `<!DOCTYPE html> <html> <head>   <meta charset="UTF-8" />   <title>Webpack Intro</title> </head> <body>   <script src="./dist/bundle.js"></script> </body> </html>`
+`bash
+   npm run build
+   `
 
-10. **Open `index.html`**
-    - Check the browser’s console for the messages from `index.js`.
+- A `dist/` folder should appear containing `bundle.js`.
 
----
+- Check the terminal for errors; inspect `bundle.js` if needed.
 
-## Submission (GitHub Only)
+### Part 6: Verify in a Browser
 
-11. **Create a New GitHub Repository** named `webpack-intro`.
-12. **Commit and Push**:
-    - `package.json` and `package-lock.json`
-    - `webpack.config.js`
-    - The `src` folder (with `index.js` and `greetings.js`)
-    - (Optional) `index.html` if you tested in a browser
-13. **Submit the Repository Link** through the designated platform.
+1. **Create** `index.html` **in the root**:
 
----
+```html
+<!DOCTYPE html>
+
+<html>
+       
+  <head>
+           
+    <meta charset="UTF-8" />
+           
+    <title>Webpack Intro</title>
+         
+  </head>
+       
+  <body>
+           
+    <script src="./dist/bundle.js"></script>
+         
+  </body>
+     
+</html>
+```
+
+2. **Open** `index.html` **in your browser**  
+       – Watch the console for “Hello, Webpack!” and “Goodbye, Webpack!”
+
+## Submission
+
+1. **GitHub Repo**: Create a new repo named `webpack-intro`.
+
+2. **Commit & Push**:
+
+- `package.json` & `package-lock.json`
+
+- `webpack.config.js`
+
+- `src/` folder (`index.js`, `greetings.js`)
+
+- _(Optional)_ `index.html` if tested in-browser
+
+3. **Submit** the repo link on the assignment platform.
 
 ## Rubric
 
-| Criteria                          | Limited (0 pts)                                         | Partial (3 pts)                                      | Complete (5 pts)                                                              |
-| --------------------------------- | ------------------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------------------------- |
-| **Webpack Installation**          | Webpack/CLI not installed or project not initialized    | Installed but configuration incomplete or incorrect  | Properly installed `webpack` & `webpack-cli`, verified in `devDependencies`   |
-| **Project Structure & Config**    | Unclear or missing `webpack.config.js`                  | Has a config file but with errors or missing details | Clear project structure with a working `webpack.config.js`                    |
-| **Bundling & Scripts**            | Code does not bundle; no build script in `package.json` | Bundling partially works or script is incomplete     | Bundling successful via `npm run build` and produces a valid `dist/bundle.js` |
-| **Code Organization & Execution** | Errors when running bundled code or no console output   | Bundled code runs but with minor issues              | Code runs as expected, logs output in console, demonstrates import/exports    |
-| **Optional Browser Test** (Bonus) | No attempt to open in a browser or check console        | Attempt made but incomplete verification             | Successfully tested in a browser; console logs “Hello, Webpack!” messages     |
+| Criteria                           | 0 pts                      | 10 pts                                  | 20 pts                                                               |
+| ---------------------------------- | -------------------------- | --------------------------------------- | -------------------------------------------------------------------- |
+| **Webpack Installation**           | Not installed              | Installed but mis‑configured            | Properly installed (`devDependencies`), verified in `package.json`   |
+| **Project Structure & Config**     | Missing or broken config   | Config present with errors              | Clear structure, working ES‑module `webpack.config.js`               |
+| **Bundling & Scripts**             | No build script or fails   | Builds with warnings or partial output  | `npm run build` succeeds, produces valid `dist/bundle.js`            |
+| **Code Organization & Execution**  | Errors or no console logs  | Runs but minor import/export issues     | Clean ES modules, logs correct output, demonstrates imports/exports  |
+| ** Browser Test**                  | Not attempted              | Opened but no console verification      | Successfully tested in-browser; console shows expected messages      |
