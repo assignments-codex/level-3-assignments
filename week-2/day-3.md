@@ -11,14 +11,13 @@
 ### Part 1: Tree Shaking Essentials
 
 1. **Project Setup**
-   - You can either continue with your existing Webpack project or create a new one.
-   - Ensure you have a `webpack.config.js` (or a custom config file) and at least one JavaScript entry file.
+   - Ensure you have a `webpack.config.js` and at least one JavaScript entry file.
 2. **Add Unused Code**
    - Within one of your modules, export multiple functions or variables, but only import and use one or two of them in your main entry file.
    - Example (conceptually):
      - A module that exports `functionA`, `functionB`, and `functionC`, but your main entry only calls `functionA`.
 3. **Enable Tree Shaking**
-   - Make sure **`mode` is set to `'production'`** in your webpack config, or use optimization settings to allow for tree shaking.
+   - Make sure **`mode` is set to `'production'`** in your webpack config.
    - Build your project and confirm that unused exports don’t appear in the final bundle (e.g., check file size or bundle contents).
 
 ### Part 2: Introduce a Loader
