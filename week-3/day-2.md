@@ -1,50 +1,67 @@
-# Task (Week 3, Day 2): Organizing React Files & Basic Routing with `useState`
+### Objective
 
-## Objective
+Use **`useState`** and **props** to build a tiny CRUD-style feature: add pets with a form and list them on the page.
 
-- Practice arranging React files in a logical, scalable manner.
-- Experiment with a minimal routing setup (e.g., using a library like **React Router**, if you choose).
-- Understand and use **useState** to manage local component state.
+### Setup
 
-## Instructions
+1. **Create a fresh project**
 
-### Part 1: File Organization
+   `npx react-webpack-codex pet-adoption && cd pet-adoption && code .`
 
-1. **Decide on a Structure**
-   - Continue from your **Week 3, Day 1** React app or create a new one (e.g., using Vite).
-   - Plan out folders such as `components`, `pages`, and possibly `hooks` or `utils` if you find it helpful.
-2. **Create a Few Components**
-   - For example, a `Header` component and a couple of page components (e.g., `HomePage` and `AboutPage`).
-3. **Place Files Strategically**
-   - Keep each component in a separate file.
-   - Consider whether any shared elements (like navigation or footers) should live in a common folder.
+2. **Clean the scaffold**
 
-### Part 2: Basic Routing Setup
+   - Empty / delete starter CSS in `style.css`.
 
-4. **Choose a Routing Method**
-   - You might install a library (e.g., **React Router**) or use a simpler approach if you’re just experimenting.
-5. **Create Routes**
-   - At minimum, set up two routes (e.g., Home and About) so you can switch between them in the browser.
-   - Confirm you can navigate between pages.
-
-### Part 3: Using `useState`
-
-6. **Add State to a Component**
-   - Pick one of your components (maybe `HomePage`).
-   - Import `useState` from `react`.
-   - Store a small piece of data in state (e.g., a counter, a message, or a user input value).
-7. **Render and Update State**
-   - Display your state variable on the page.
-   - Provide a way to update it (e.g., a button click or an input field).
-
-### Part 4: Verify Everything Works
-
-- **Run Your App** and confirm you can navigate routes and see state changes.
-- **Check for Errors** in your console or browser.
+   - Remove default component code in `App.jsx`, `index.jsx`, and any sample components.
 
 ---
 
-## Additional Notes (Non-Graded)
+### Required Files (inside `src/`)
 
-- If you wish, **commit** your changes to a GitHub repo (e.g., `react-routing-useState`) for personal reference or sharing.
-- No rubric or official submission is required for this task, but treating it seriously will deepen your React and file-organization skills.
+| File          | Purpose                                                                 |
+| ------------- | ----------------------------------------------------------------------- |
+| `App.jsx`     | Root component; owns **array of pets** state.                           |
+| `PetForm.jsx` | Form component; collects **name, species, age** and passes data upward. |
+| `PetCard.jsx` | Presentational card; displays a single pet’s info.                      |
+
+---
+
+### Functional Requirements
+
+1. **App.jsx**
+
+   - Initialize `pets` state (empty array).
+
+   - Provide a callback prop to `<PetForm />` that **adds** a new pet (use an immutable update).
+
+   - Render a list of `<PetCard />` components by mapping over `pets`.
+
+2. **PetForm.jsx**
+
+   - Manage three controlled inputs (`name`, `species`, `age`) with `useState`.
+
+   - On submit, bundle input values into an object `{ id, name, species, age }` and call the callback from props.
+
+   - Clear inputs after submission.
+
+3. **PetCard.jsx**
+
+   - Receive a `pet` prop and display its `name`, `species`, and `age`.
+
+> **Hook & Component Rules**
+>
+> - Call hooks **only at the top level** of React functions.
+>
+> - **Do not** mutate state directly; create new arrays/objects.
+>
+> - Component names start with a **capital letter**.
+
+---
+
+### Styling Guidelines
+
+- Keep styles simple; add only what you can type live in class.
+
+- Suggested: centered layout, subtle card borders/shadows, basic form spacing.
+
+---
