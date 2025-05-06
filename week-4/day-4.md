@@ -1,85 +1,99 @@
-# Assignment (Week 4, Day 4): Writing and Reading from DynamoDB in a React App
+### Objective
 
-## Objective
+- Fetch all TODO items from DynamoDB on component mount.
 
-- **Create a new React app** (manual Webpack/Babel setup) with proper **IAM** permissions.
+- Allow adding a new TODO by writing an item to DynamoDB.
 
-- **Write data** to a DynamoDB table from a simple **form** in React.
+- Use the AWS SDK for JavaScript v3 (`@aws-sdk/client-dynamodb` & `@aws-sdk/lib-dynamodb`).
 
-- **Read and display** items from the same DynamoDB table in the app’s DOM.
-
-## Instructions
-
-### Part 1: Project Setup
-
-1. **Create a New Folder**
-
-   - Name it, for example, `dynamodb-react-crud`.
-
-   - Initialize it (`npm init -y`), and set up **Webpack** and **Babel** based on the pattern from **Week 3, Day 1** (and reinforced in Week 4, Day 3).
-
-2. **Add React**
-
-   - Install `react` and `react-dom`.
-
-   - Verify your setup by running the build and ensuring a basic React component renders.
-
-### Part 2: AWS SDK & Permissions
-
-1. **Install AWS SDK**
-
-   `npm install aws-sdk`
-
-2. **Check IAM Policy**
-
-   - Make sure the IAM credentials you use have:
-
-     - **Write** permissions (e.g., `dynamodb:PutItem`) for adding data.
-
-     - **Read** permissions (e.g., `dynamodb:Scan` or `dynamodb:GetItem`) for retrieving data.
-
-### Part 3: Form to Write Data to DynamoDB
-
-1. **Create a Simple Form**
-
-   - Add fields (for example, a name and a description).
-
-   - On submit, call a function that uses the AWS SDK to **put** or **update** items in your DynamoDB table.
-
-2. **Validate Input** (Optional)
-
-   - Ensure your code handles empty inputs or repeated submissions gracefully.
-
-### Part 4: Read and Display DynamoDB Items
-
-1. **Retrieve Items**
-
-   - In the same project, implement a method to **scan** or **get** items from the table.
-
-2. **Render Items**
-
-   - Show the retrieved items in a basic list or table in your React component.
-
-   - Confirm the newly added items (via your form) appear after refreshing or re-fetching.
+### Instructions
 
 ---
 
-## Submission
+### 1. Install AWS SDK (if not already)
 
-- **GitHub Repository**:
+```bash
+npm install @aws-sdk/client-dynamodb @aws-sdk/lib-dynamodb
+```
 
-  - Push this project to a new repository (e.g., `dynamodb-react-crud`).
+### 2. Update `src/App.jsx`
 
-  - Include a **README** describing how to install dependencies, build the app, and run it locally (e.g., `npm install`, `npm run build`, then open your `index.html`).
+Replace your existing component with the code below. It:
+
+1. Reads all items via a **ScanCommand** in `useEffect`.
+
+2. Adds a new item via **PutCommand** in `handleAdd`.
+
+```jsx
+import React, { useState, useEffect } from "react";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBDocumentClient,
+  ScanCommand,
+  PutCommand,
+} from "@aws-sdk/lib-dynamodb";
+
+// Initialize DynamoDB client with env vars
+const ddb = new DynamoDBClient({
+  region: process.env.REACT_APP_AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+  },
+});
+const docClient = DynamoDBDocumentClient.from(ddb);
+
+export default function App() {
+  const [todos, setTodos] = useState([]);
+  const [text, setText] = useState("");
+
+  // 1. Read all items on mount
+  useEffect(() => {
+    async function fetchData() {
+      const { Items } = await docClient.send(
+        new ScanCommand({ TableName: "Todo" }),
+      );
+      setTodos(Items || []);
+    }
+    fetchData();
+  }, []);
+
+  // 2. Write a new item
+  const handleAdd = async () => {
+    if (!text.trim()) return;
+    const newItem = { id: Date.now().toString(), text, completed: false };
+    await docClient.send(new PutCommand({ TableName: "Todo", Item: newItem }));
+    setTodos((prev) => [...prev, newItem]);
+    setText("");
+  };
+
+  return (
+    <div style={{ padding: 16 }}>
+      <h1>Simple TODO (Read & Write in App.jsx)</h1>
+      <input
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="New task"
+        style={{ marginRight: 8 }}
+      />
+      <button onClick={handleAdd}>Add</button>
+
+      <ul style={{ marginTop: 16 }}>
+        {todos.map(({ id, text }) => (
+          <li key={id}>{text}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
 
 ---
 
-## Rubric
+### 3. Run & Verify
 
-| Criteria                             | Limited (0 pts)                                    | Partial (10 pts)                                           | Complete (20 pts)                                                       |
-| ------------------------------------ | -------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------- |
-| **Manual Webpack/Babel React Setup** | Setup is broken or incomplete; app won’t build/run | Partially working setup with some errors                   | Fully working, as established in previous assignments                   |
-| **IAM Permissions**                  | Missing or incorrect; write/read attempts fail     | Partially correct, can write but not read or vice versa    | Correctly configured for both read and write in DynamoDB                |
-| **Form & Write Operation**           | No functional form or DynamoDB write operation     | Form exists but write logic fails or is incomplete         | Form input is successfully saved to DynamoDB                            |
-| **Read & Display Data**              | DynamoDB items are not retrieved or displayed      | Retrieval logic is present but buggy or incomplete display | Data is reliably fetched and rendered, including new items              |
-| **Code Organization & Clarity**      | Disorganized structure or missing key files        | Some structure, but still unclear how everything fits      | Clear separation of concerns: AWS config, form component, display logic |
+1. Start your React app (`npm start` or `npm run dev`).
+
+2. Ensure your region (top-right AWS Console) is **us-east-1**.
+
+3. Add a few tasks; confirm they appear in the list and in the DynamoDB table.
