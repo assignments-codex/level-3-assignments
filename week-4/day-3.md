@@ -8,9 +8,11 @@ Building on yesterday’s AWS and React setup, today you’ll implement basic **
 - Allow adding a new TODO by writing an item to DynamoDB.
 - Use the AWS SDK for JavaScript v3 (`@aws-sdk/client-dynamodb` & `@aws-sdk/lib-dynamodb`).
 
-> **Note:** You already created your IAM user and DynamoDB table (`Todo` with String PK `id`) and set up your `.env` yesterday.
-
 ---
+
+### Instructions
+
+> **Note:** You already created your IAM user and DynamoDB table (`Todo` with String PK `id`) and set up your `.env` yesterday.
 
 ### 1. Install AWS SDK (if not already)
 
