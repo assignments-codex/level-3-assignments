@@ -10,82 +10,210 @@
 
 ## Instructions
 
-### Part 1: Project Setup with Webpack & Babel
+### 1. Create Your React Project
 
-1. **Create a New Folder**
-
-   - Name it something like `dynamodb-react-read`.
-
-   - Initialize it (e.g., `npm init -y`), install and configure **Webpack** and **Babel** as you did in **Week 3, Day 1**.
-
-2. **Add React**
-
-   - Install `react` and `react-dom`.
-
-   - Confirm your basic React setup is working by building (`npm run build`) and opening the resulting HTML page in a browser.
-
-### Part 2: AWS SDK and .env Configuration
-
-1. **Install AWS SDK**
-
-   ```bash
-   npm install aws-sdk
-   ```
-
-2. **Use a .env File**
-
-   - Store your **AWS_ACCESS_KEY_ID** and **AWS_SECRET_ACCESS_KEY** in a local `.env` file to keep them out of your code.
-
-   - Ensure you don’t push your real credentials to GitHub.
-
-### Part 3: Scanning Your DynamoDB Table
-
-1. **Create a JS Module for AWS**
-
-   - In a file (e.g., `awsDynamo.js`), configure the AWS SDK with:
-
-     - Your **region**
-
-     - **Credentials** (loaded from `.env` or a config object)
-
-   - Use **`documentClient.scan`** to retrieve **all items** from the table you seeded on Day 2.
-
-     - `scan` is simplest when you want everything in a small table.
-
-2. **Invoke the Function from Your React Code**
-
-   - In your main React component or a small script, call your `scan` function when the page loads.
-
-   - **Console.log** the returned data to confirm it’s retrieving items from DynamoDB.
-
-### Part 4: Verify & Submit
-
-1. **Build and Open**
-
-   - Run your build, open the app in a browser, and check the console for your table data.
-
-2. **Troubleshoot**
-
-   - If you see permission errors, revisit your IAM policy to ensure `dynamodb:Scan` is allowed.
+Follow your instructor’s usual workflow to scaffold a React app (e.g., `create-react-app`, Vite, or manual Webpack/Babel). Verify that `npm start` (or `npm run dev`) launches your blank React application.
 
 ---
 
-## Submission
+### 2. Create the DynamoDB Table
 
-- **GitHub Repository**:
+1. In the AWS Management Console, **confirm the region** in the top‑right is set to **US East (N. Virginia) (us-east-1)**.
 
-  - Push this project to a new repository.
+2. Open **DynamoDB** → **Tables** → **Create table**.
 
-  - Include a short **README** with steps to install, build, and run, along with a note about where to see the logged data (browser console).
+3. Set **Table name** to `Todo`.
+
+4. Under **Partition key**, enter **`id`** and choose **String**.
+
+5. Leave all other settings as default, then click **Create table**.
 
 ---
 
-## Rubric
+### 3. Install AWS SDK Packages
 
-| Criteria                        | Limited (0 pts)                                 | Partial (10 pts)                                          | Complete (20 pts)                                                        |
-| ------------------------------- | ----------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------ |
-| **Webpack/Babel React Setup**   | Incorrect or missing setup; app won’t build/run | Partially working setup with errors or incomplete         | Fully working manual setup following Week 3, Day 1 pattern               |
-| **IAM Permissions**             | No valid read permission; DynamoDB scan fails   | Permissions partially correct, data load inconsistent     | Correctly configured `dynamodb:Scan` permission; data loads reliably     |
-| **AWS SDK Integration**         | AWS not installed or improperly configured      | SDK installed but code not fully functional               | AWS SDK correctly configured; able to connect to DynamoDB                |
-| **Data Retrieval**              | No data retrieved or constant errors            | Some data retrieval but with errors or incomplete results | Successfully retrieves items from DynamoDB and logs them                 |
-| **Code Organization & Clarity** | Code is overly cluttered or unclear             | Some organization, but not fully clear                    | Logical, minimal structure (separate AWS config file, simple React code) |
+In your React project directory, run:
+
+```bash
+npm install @aws-sdk/client-dynamodb @aws-sdk/lib-dynamodb
+```
+
+---
+
+### 4. Create an IAM User for Demo
+
+1. In the AWS Console, go to **IAM** → **Users** → **Add users**.
+
+2. Enter a user name (e.g., `todo-demo-user`).
+
+3. Select **Programmatic access** and proceed.
+
+4. On **Set permissions**, attach the **AmazonDynamoDBFullAccess** policy.
+
+5. Create the user and **copy** the **Access key ID** and **Secret access key** (you’ll only see the secret once).
+
+---
+
+### 5. Configure Environment Variables
+
+In your project root, create a file named `.env.local` (or `.env`):
+
+```env
+REACT_APP_AWS_REGION=us-east-1
+REACT_APP_AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY_ID
+REACT_APP_AWS_SECRET_ACCESS_KEY=YOUR_SECRET_ACCESS_KEY
+```
+
+> Prefix environment variables as `REACT_APP_` (for Create React App) or `VITE_` (for Vite) to have them exposed in `process.env` or `import.meta.env`.
+
+---
+
+### 6. Initialize the DynamoDB Client
+
+Create `src/ddbClient.js`:
+
+```js
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBDocumentClient,
+  ScanCommand,
+  PutCommand,
+  UpdateCommand,
+  DeleteCommand,
+} from "@aws-sdk/lib-dynamodb";
+
+const client = new DynamoDBClient({
+  region: process.env.REACT_APP_AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+  },
+});
+
+export const ddbClient = DynamoDBDocumentClient.from(client);
+
+export const fetchTodos = () =>
+  ddbClient.send(new ScanCommand({ TableName: "Todo" }));
+
+export const addTodo = (item) =>
+  ddbClient.send(new PutCommand({ TableName: "Todo", Item: item }));
+
+export const updateTodo = (id, completed) =>
+  ddbClient.send(
+    new UpdateCommand({
+      TableName: "Todo",
+      Key: { id },
+      UpdateExpression: "SET completed = :c",
+      ExpressionAttributeValues: { ":c": completed },
+    }),
+  );
+
+export const deleteTodo = (id) =>
+  ddbClient.send(new DeleteCommand({ TableName: "Todo", Key: { id } }));
+```
+
+---
+
+### 7. Build the React UI
+
+Replace your main component (e.g., `src/App.jsx`) with:
+
+```jsx
+import React, { useState, useEffect } from "react";
+import { fetchTodos, addTodo, updateTodo, deleteTodo } from "./ddbClient";
+
+export default function App() {
+  const [todos, setTodos] = useState([]);
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    fetchTodos().then(({ Items }) => setTodos(Items));
+  }, []);
+
+  const handleAdd = async () => {
+    if (!text.trim()) return;
+    const newItem = { id: Date.now().toString(), text, completed: false };
+    await addTodo(newItem);
+    setTodos((prev) => [...prev, newItem]);
+    setText("");
+  };
+
+  const handleToggle = async (id, comp) => {
+    await updateTodo(id, !comp);
+    setTodos((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, completed: !comp } : t)),
+    );
+  };
+
+  const handleDelete = async (id) => {
+    await deleteTodo(id);
+    setTodos((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  return (
+    <div style={{ padding: 20 }}>
+      <h1>React + DynamoDB TODO</h1>
+      <input
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="New task"
+        style={{ marginRight: 8 }}
+      />
+      <button onClick={handleAdd}>Add</button>
+      <ul style={{ marginTop: 16 }}>
+        {todos.map(({ id, text, completed }) => (
+          <li
+            key={id}
+            style={{ marginBottom: 8 }}
+          >
+            <label
+              style={{ textDecoration: completed ? "line-through" : "none" }}
+            >
+              <input
+                type="checkbox"
+                checked={completed}
+                onChange={() => handleToggle(id, completed)}
+              />{" "}
+              {text}
+            </label>
+            <button
+              onClick={() => handleDelete(id)}
+              style={{ marginLeft: 12 }}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+---
+
+### 8. Run & Verify
+
+1. Launch your app (`npm start` or `npm run dev`).
+
+2. Open the React app in a browser.
+
+3. Add, toggle, and delete items—watch changes appear in your DynamoDB table.
+
+---
+
+### Submission & Rubric
+
+- **GitHub Repo**: Include your project with a `README` covering setup, table creation, and how to run.
+
+- **Functionality**: App must scan items on load and support add/toggle/delete seamlessly.
+
+- **AWS Setup**: Correct table creation, correct IAM permissions, and correct env configuration.
+
+| Criteria                | 0 pts                        | 10 pts                    | 20 pts                              |
+| ----------------------- | ---------------------------- | ------------------------- | ----------------------------------- |
+| **React Setup**         | Does not build or run        | Builds but errors persist | Clean setup per instructor workflow |
+| **DynamoDB Table**      | Not created or misconfigured | Created but wrong schema  | `Todo` table with `id` String PK    |
+| **AWS SDK Integration** | Missing or broken code       | Partial functionality     | Fully scans, adds, updates, deletes |
+| **Code Organization**   | Monolithic and unclear       | Some separation but messy | `ddbClient.js` + clear UI code      |
+|                         |                              |                           |                                     |
