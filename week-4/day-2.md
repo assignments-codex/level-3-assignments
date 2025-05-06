@@ -1,58 +1,120 @@
-# Task (Week 4, Day 2): Expanding IAM Roles & Exploring AWS Services
+## Week 4, Day 2: Simple Read & Write in One File
 
-> **Note:** This is a non-graded task. No rubric is provided.
+### Objective
 
-## Objective
+Build a single-file React application that uses the AWS SDK to **scan** and **create** items in your DynamoDB `Todo` table.
 
-- Reinforce your understanding of AWS Identity and Access Management (IAM).
+### Steps
 
-- Create additional IAM user(s) for various roles or environments.
+1. **Initialize Project**
+   Scaffold a blank React app. Verify it runs without errors.
 
-- Explore at least one **additional AWS service** (beyond DynamoDB) to broaden your familiarity with the AWS ecosystem.
+2. **IAM User Setup**
 
-## Instructions
+   - In AWS Console → IAM → Users → Add user.
+   - Enter a user name (e.g., `todo-demo-user`) and click **Next**.
+   - On the **Permissions** page, attach the **AmazonDynamoDBFullAccess** policy and continue.
+   - After creating the user, go to their **Security credentials** tab.
+   - Click **Create access key** to generate an **Access key ID** and **Secret access key**—**copy both** now (you won’t see the secret again).
 
-### Part 1: Create Additional IAM User(s)
+3. **DynamoDB Table** **DynamoDB Table**
 
-1. **Plan New Roles**
+   - In AWS Console → DynamoDB → Tables → Create table.
+   - Table name: `Todo`
+   - Partition key: `id` (String)
+   - Create the table.
 
-   - Consider creating a “dev” user for development tasks, or a “readonly” user for review/monitoring.
+4. **Environment Variables**
 
-2. **Add the IAM User**
+   - In project root, add a `.env` (or `.env.local`) file:
 
-   - Within the AWS console, under **IAM**, create one or more new users.
+     ```env
+     REACT_APP_AWS_REGION=us-east-1
+     REACT_APP_AWS_ACCESS_KEY_ID=YOUR_KEY_ID
+     REACT_APP_AWS_SECRET_ACCESS_KEY=YOUR_SECRET_KEY
+     ```
 
-   - Assign appropriate permissions or attach policies (e.g., Admin, PowerUser, or custom policies).
+5. **App.jsx Implementation**
 
-### Part 2: Explore an Additional AWS Service
+   - Install and import the AWS SDK packages in your React file:
 
-1. **Choose a Service**
+     ```bash
+     npm install @aws-sdk/client-dynamodb @aws-sdk/lib-dynamodb
+     ```
 
-   - Examples include **S3** (object storage), **Lambda** (serverless functions), or **EC2** (virtual servers).
+   - Replace your `src/App.jsx` content with the template below:
 
-2. **Quick Review**
+   ```jsx
+   import React, { useState, useEffect } from "react";
+   import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+   import {
+     DynamoDBDocumentClient,
+     ScanCommand,
+     PutCommand,
+   } from "@aws-sdk/lib-dynamodb";
 
-   - Read a few paragraphs or watch a short AWS video about this service’s purpose and typical use cases.
+   const client = new DynamoDBClient({
+     region: process.env.REACT_APP_AWS_REGION,
+     credentials: {
+       accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+       secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+     },
+   });
+   const docClient = DynamoDBDocumentClient.from(client);
 
-3. **Note a Key Takeaway**
+   async function scanTodos() {
+     const { Items } = await docClient.send(
+       new ScanCommand({ TableName: "Todo" }),
+     );
+     return Items || [];
+   }
 
-   - Jot down one piece of information you found interesting or surprising about the service.
+   async function createTodo(item) {
+     await docClient.send(new PutCommand({ TableName: "Todo", Item: item }));
+   }
 
----
+   export default function App() {
+     const [todos, setTodos] = useState([]);
+     const [text, setText] = useState("");
 
-## Submission
+     useEffect(() => {
+       scanTodos().then(setTodos);
+     }, []);
 
-- **GitHub Repository (Optional)**:
+     const handleAdd = async () => {
+       if (!text.trim()) return;
+       const newItem = { id: Date.now().toString(), text, completed: false };
+       await createTodo(newItem);
+       setTodos((prev) => [...prev, newItem]);
+       setText("");
+     };
 
-  - If you maintain notes in a GitHub repo, add a short entry describing your new IAM user(s) and the AWS service you explored.
+     return (
+       <div style={{ padding: 20 }}>
+         <h1>Todo App</h1>
+         <input
+           value={text}
+           onChange={(e) => setText(e.target.value)}
+           placeholder="New todo"
+           style={{ marginRight: 8 }}
+         />
+         <button onClick={handleAdd}>Add</button>
 
-  - Include a brief mention of your key takeaway.
+         <ul style={{ marginTop: 16 }}>
+           {todos.map((t) => (
+             <li key={t.id}>{t.text}</li>
+           ))}
+         </ul>
+       </div>
+     );
+   }
+   ```
 
-- **Screenshot**:
+6. **Verify**
 
-  - Capture a screenshot of your IAM console showing the new user(s) you created.
-
-  - Add it to your notes or GitHub repo if you like.
-
-> This task is **not graded**, but completing it will help you stay up-to-date with your AWS setup and deepen your cloud service knowledge.
-
+   - Start your React app.
+   - Invoke `scanTodos()` on load and log or display the results in your UI.
+   - Use the “Add” button to call `createTodo()` and confirm new items appear in DynamoDB. **Verify**
+   - Start your React app.
+   - Invoke `scanTodos` on load and log the results.
+   - Use `createTodo` to add entries and confirm they appear in DynamoDB.
