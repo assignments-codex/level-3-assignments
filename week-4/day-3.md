@@ -33,7 +33,7 @@ _No additional files or folders required—keep everything in `App.jsx`._
 
 ### 3. Run & Verify
 
-1. Start your React app (`npm start` or `npm run dev`).
+1. Start your React app (`npm run dev`).
 2. Confirm the AWS Console’s region (top-right) is set to **us-east-1**.
 3. Add a few tasks; verify they appear both in the app and in the DynamoDB table.
 
