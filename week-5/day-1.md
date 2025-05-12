@@ -10,113 +10,45 @@
 
 ### Part 1: Initial Project Setup
 
-1. **Create a New Folder** (`sass-nesting-variables`) and run:
+## Objective
 
-   ```bash
-   npm init -y
-   ```
+- Build a single-file React application that uses the AWS SDK to scan and create items in your DynamoDB Todo table.
 
-2. **Install React**:
+### Instructions
 
-   ```bash
-   npm install react react-dom
-   ```
+1. **Create a new React project**
+   Use the workflow or CLI your instructor recommends. Confirm it runs locally before you begin styling.
 
-3. **Install Dev Dependencies**:
+2. **Convert CSS to SCSS**
+   Rename your existing `.css` file(s) to `.scss` and ensure your build pipeline processes SCSS without errors.
 
-   ```bash
-   npm install --save-dev webpack webpack-cli babel-loader @babel/core @babel/preset-env @babel/preset-react sass sass-loader style-loader css-loader
-   ```
+3. **Define a color theme**
+   In your main stylesheet, declare **five** SCSS variables for your palette (e.g. primary, secondary, accent, muted, highlight). Tools like coolors.co can help you pick values.
 
-### Part 2: Babel Configuration
+4. **Demonstrate nesting**
+   Still in that stylesheet, create **three** container classes (e.g. `.section-one`, `.section-two`, `.section-three`). Inside each, nest element selectors (headings, links, buttons, etc.) to show SCSS’s nesting syntax.
 
-1. **Create a `.babelrc`** in your project root:
-
-   ```json
-   {
-     "presets": ["@babel/preset-env", "@babel/preset-react"]
-   }
-   ```
-
-### Part 3: Webpack Configuration
-
-1. **Create a `webpack.config.js`** file in your project root with **exactly** the following content:
-
-   ```js
-   const path = require("path");
-
-   module.exports = {
-     entry: "./src/index.js",
-     output: {
-       path: path.resolve(__dirname, "dist"),
-       filename: "bundle.js",
-     },
-     mode: "development",
-     module: {
-       rules: [
-         {
-           test: /\.jsx?$/,
-           exclude: /node_modules/,
-           use: {
-             loader: "babel-loader",
-           },
-         },
-         {
-           test: /\.scss$/,
-           use: ["style-loader", "css-loader", "sass-loader"],
-         },
-       ],
-     },
-     resolve: {
-       extensions: [".js", ".jsx"],
-     },
-   };
-   ```
-
-### Part 4: Project Structure & SASS Usage
-
-1. **Create a `src` folder** for your React and SASS files.
-
-2. **Ensure you have**:
-
-   - An **entry point** file (e.g., `index.js`) that renders a minimal React component.
-
-   - A **`.scss` file** with at least one **variable** and a **nested** rule.
-
-   - An **import** statement referencing your `.scss` in your React code, so Webpack will compile it.
-
-3. **Create an HTML file** that references the output bundle (`dist/bundle.js`).
-
-### Part 5: Build & Test
-
-1. **Run Webpack** to build:
-
-   ```bash
-   npx webpack
-   ```
-
-2. **Open your HTML file** (where `bundle.js` is linked). Confirm the SASS-based styles are applied to your React component.
+5. **Deploy to Netlify**
+   Push your code to GitHub, connect the repo in Netlify, and deploy. Verify your live site reflects your SCSS styles.
 
 ---
 
-## Submission
+**Submission**
 
-- **GitHub Repository**:
+- **GitHub Repo URL**
 
-  - Create or use a new repository named something like `react-sass-intro`.
+- **Live Site URL** (Netlify)
 
-  - Include your **webpack.config.js**, **.babelrc**, `src` files, and HTML.
-
-  - Add a **README** with the steps needed to install, build, and run the project.
+> Both links are required.
 
 ---
 
-## Rubric
+**Rubric (100 points)**
 
-| Criteria                             | Limited (0 pts)                                            | Partial (10 pts)                                                   | Complete (20 pts)                                                             |
-| ------------------------------------ | ---------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| **Manual Webpack/Babel React Setup** | Broken or incomplete; cannot build/run app                 | Partially configured, with some errors or missing steps            | Fully configured Webpack/Babel stack, builds and runs as described            |
-| **SASS Integration**                 | `.scss` is not handled or fails to compile                 | SASS partially set up; errors or missing some loader configuration | `.scss` compiles successfully; style-loader, css-loader, and sass-loader work |
-| **Nesting & Variables in SASS**      | No nesting or variable usage                               | Minimal attempt but not clearly demonstrated                       | Clear nesting structure and at least one variable used in `.scss`             |
-| **Code Organization & Clarity**      | Files missing, unclear structure, or no build instructions | Some structure, but incomplete README or file organization         | Logical file layout; README details how to install, build, and run            |
-| **React Integration**                | No `.scss` import or styles never applied in React         | .scss is imported but partially or incorrectly applied             | .scss is imported, styles are confirmed visible in the rendered component     |
+| Criteria                     | Limited (0 pts)                        | Partial (10 pts)                                 | Complete (20 pts)                                              |
+| ---------------------------- | -------------------------------------- | ------------------------------------------------ | -------------------------------------------------------------- |
+| **Project setup & run**      | Doesn’t start or build                 | Builds/runs with errors or warnings              | Builds and runs cleanly via prescribed workflow                |
+| **SCSS conversion & config** | SCSS not processed or build breaks     | `.scss` compiles but with issues                 | SCSS integrates smoothly; build pipeline error-free            |
+| **Color theme variables**    | Fewer than 5 variables or poor naming  | 5 variables defined but inconsistent theme       | Five well-named variables; cohesive color palette              |
+| **Nesting demonstration**    | No nesting or incorrect nesting syntax | Some nesting shown but not in all three sections | Clear, correct nesting in all three container classes          |
+| **Deployment & submission**  | No live link or no repo link           | One link missing or deploy fails                 | Both GitHub and live URLs provided; site loads with new styles |
