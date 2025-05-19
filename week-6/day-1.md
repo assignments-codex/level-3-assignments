@@ -1,46 +1,76 @@
-# Assignment (Week 6, Day 1): Setting Up Jest for React Testing
+# Assignment (Week 6, Day 1): Setting Up Vitest for React Testing
 
 ## Objective
 
-- Create a **new React project** (Webpack & Babel) and **install Jest** for testing.
+- Create a **new React project** and set up **Vitest** for testing.
 - Configure **basic test scripts** in `package.json`.
-- Verify Jest runs a simple test successfully.
+- Verify Vitest runs a simple test successfully.
 
 ## Instructions
 
 ### Part 1 – New React Project Setup
 
-1. **Create a project folder**
+1. **Create a new React project**
 
-   - Example name: `react-jest-setup`
-   - Inside that folder run `npm init -y` to create `package.json`.
+   ```bash
+   npm create vite@latest
+   ```
 
-2. **Start a React project**
+   - Select **React**.
+   - Select **JavaScript** (or **TypeScript** if preferred).
 
-   - Set up React any way you like (for example with Vite, a custom Webpack build, etc.).
-   - Make sure the app builds and loads in a browser before you move on to testing.
+2. **Install dependencies**
+
+   ```bash
+   cd your-project-name
+   npm install
+   ```
+
+3. **Verify your project works**
+
+   ```bash
+   npm run dev
+   ```
+
+   - Ensure your React app loads successfully in the browser.
 
 ---
 
-### Part 2 – Install & Configure Jest
+### Part 2 – Install & Configure Vitest
 
-1. **Add testing dependencies**
+1. **Install testing dependencies**
 
    ```bash
-   npm install --save-dev jest babel-jest @testing-library/react @testing-library/jest-dom
+   npm install --save-dev vitest @testing-library/react @testing-library/jest-dom jsdom
    ```
 
-   - **jest** – test runner and assertion library
-   - **babel-jest** – lets Jest work with Babel-transpiled code
-   - **@testing-library/react** and **@testing-library/jest-dom** – helpers for React component tests
+2. **Configure Vitest**
 
-2. **Add a Jest script**
+   Update your existing `vite.config.js`:
 
-   In `package.json`:
+   ```js
+   import { defineConfig } from "vite";
+   import react from "@vitejs/plugin-react";
+
+   export default defineConfig({
+     plugins: [react()],
+     test: {
+       environment: "jsdom",
+       globals: true,
+     },
+   });
+   ```
+
+3. **Update your scripts**
+
+   In `package.json` add a test script:
 
    ```json
    "scripts": {
-     "test": "jest"
+     "dev": "vite",
+     "build": "vite build",
+     "preview": "vite preview",
+     "test": "vitest"
    }
    ```
 
@@ -50,14 +80,18 @@
 
 1. **Create a test file**
 
-   - Place it in a `__tests__` or `tests` folder (or beside the component under `src`).
-   - Example file name: `App.test.js`.
+   - Place it beside your component in `src` (e.g., `src/App.test.jsx`).
 
-2. **Add a basic test**
+2. **Write your first test**
 
-   ```js
-   test("basic math works", () => {
-     expect(2 + 2).toBe(4);
+   ```jsx
+   import { render, screen } from "@testing-library/react";
+   import "@testing-library/jest-dom";
+   import App from "./App";
+
+   test("renders hello message", () => {
+     render(<App />);
+     expect(screen.getByText(/vite \+ react/i)).toBeInTheDocument();
    });
    ```
 
@@ -65,32 +99,29 @@
 
 ### Part 4 – Run Your Tests
 
-1. **Execute Jest**
+```bash
+npm test
+```
 
-   ```bash
-   npm test
-   ```
-
-2. **Check the output**
-
-   - Passing tests will display green checks; failures will list errors to fix.
+- Confirm that Vitest successfully runs your test.
+- Passing tests display clearly in the terminal.
 
 ---
 
 ## Submission
 
-- **GitHub repository**
+- **GitHub Repository**
 
-  - Push your full project (source, config files, and tests).
-  - Include a concise **README** with install, build, and test commands (`npm install`, `npm run build` or equivalent, `npm test`).
+  - Push your complete project (source files, configs, tests).
+  - Include a **README** with clear instructions (`npm install`, `npm run dev`, `npm test`).
 
 ---
 
 ## Rubric
 
-| Criteria                              | Limited (0 pts)                          | Partial (13 pts)                       | Complete (25 pts)                                                |
-| ------------------------------------- | ---------------------------------------- | -------------------------------------- | ---------------------------------------------------------------- |
-| **Custom React build setup**          | Build is broken or key files are missing | Build works but has configuration gaps | React project builds and runs cleanly                            |
-| **Jest installation & script**        | Jest missing or test script absent       | Jest installed but mis-configured      | Jest fully set up and `npm test` runs successfully               |
-| **Basic test implementation**         | No test file or tests never run          | Test file exists but fails to run      | At least one passing test visible in console                     |
-| **Code organization & documentation** | Disorganized files, unclear instructions | Basic structure, minimal README        | Clear folder structure and helpful README (install, build, test) |
+| Criteria                              | Limited (0 pts)                   | Partial (13 pts)                       | Complete (25 pts)                                                |
+| ------------------------------------- | --------------------------------- | -------------------------------------- | ---------------------------------------------------------------- |
+| **React + Vite Setup**                | Build broken or missing key files | Project builds but incomplete setup    | React + Vite project fully working                               |
+| **Vitest Installation & Config**      | Missing Vitest or scripts         | Vitest installed, configuration issues | Vitest fully configured, `npm test` runs successfully            |
+| **Basic Test Implementation**         | No test file or test never runs   | Test file present but incorrect/fails  | At least one passing test displayed clearly in terminal          |
+| **Code Organization & Documentation** | Unorganized, unclear README       | Basic organization, incomplete README  | Clear organization, helpful README (install, run, test commands) |
