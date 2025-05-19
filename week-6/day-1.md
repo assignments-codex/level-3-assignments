@@ -8,78 +8,89 @@
 
 ## Instructions
 
-### Part 1: New React Project Setup
+### Part 1 – New React Project Setup
 
-1. **Create a New Folder**
-   - For example, `react-jest-setup`.
-   - Initialize a Node.js project with `npm init -y`.
-2. **Install React & Build Tools**
-   - Use **Webpack**, **Babel**, and **React** as demonstrated in prior weeks (Week 3, Day 1).
-   - Make sure you can build and view your React app in the browser before adding Jest.
+1. **Create a project folder**
 
-### Part 2: Install & Configure Jest
+   - Example name: `react-jest-setup`
+   - Inside that folder run `npm init -y` to create `package.json`.
 
-1. **Install Jest & Related Packages**
+2. **Start a React project**
+
+   - Set up React any way you like (for example with Vite, a custom Webpack build, etc.).
+   - Make sure the app builds and loads in a browser before you move on to testing.
+
+---
+
+### Part 2 – Install & Configure Jest
+
+1. **Add testing dependencies**
 
    ```bash
    npm install --save-dev jest babel-jest @testing-library/react @testing-library/jest-dom
    ```
 
-   - **Jest**: The test runner and assertion library.
-   - **babel-jest**: Allows Jest to work with Babel-transpiled code.
-   - **@testing-library/react** and **@testing-library/jest-dom**: Tools for testing React components in Jest.
+   - **jest** – test runner and assertion library
+   - **babel-jest** – lets Jest work with Babel-transpiled code
+   - **@testing-library/react** and **@testing-library/jest-dom** – helpers for React component tests
 
-2. **Add Jest Config**
+2. **Add a Jest script**
 
-   - In your `package.json`, under `"scripts"`, add:
+   In `package.json`:
 
-     ```json
-     "scripts": {
-       "test": "jest"
-     }
-     ```
+   ```json
+   "scripts": {
+     "test": "jest"
+   }
+   ```
 
-   - Optionally, create a **`jest.config.js`** file (if needed for custom configs) or rely on Jest defaults.
+---
 
-### Part 3: Write a Simple Test
+### Part 3 – Write a Simple Test
 
-1. **Create a Test File**
-   - For example, make a `__tests__` folder or `tests` folder in your project root or inside `src`.
-   - Name it something like `App.test.js` or `sum.test.js`.
-2. **Write a Basic Test**
+1. **Create a test file**
 
-   - Example pseudocode:
+   - Place it in a `__tests__` or `tests` folder (or beside the component under `src`).
+   - Example file name: `App.test.js`.
 
-     ```js
-     test("Basic math test", () => {
-       expect(2 + 2).toBe(4);
-     });
-     ```
+2. **Add a basic test**
 
-### Part 4: Run Your Tests
+   ```js
+   test("basic math works", () => {
+     expect(2 + 2).toBe(4);
+   });
+   ```
+
+---
+
+### Part 4 – Run Your Tests
 
 1. **Execute Jest**
-   - Run `npm test` in your terminal.
-2. **Verify Success**
-   - The command should show passing or failing tests in the console.
-   - If tests fail, review any error messages.
+
+   ```bash
+   npm test
+   ```
+
+2. **Check the output**
+
+   - Passing tests will display green checks; failures will list errors to fix.
 
 ---
 
 ## Submission
 
-- **GitHub Repository**
-  - Create a new repo (e.g., `react-jest-setup`).
-  - Include **webpack.config.js**, **.babelrc**, `package.json`, and **test file(s)**.
-  - Provide a **README** describing installation, build, and test steps (e.g., `npm install`, `npm run build`, `npm test`, etc.).
+- **GitHub repository**
+
+  - Push your full project (source, config files, and tests).
+  - Include a concise **README** with install, build, and test commands (`npm install`, `npm run build` or equivalent, `npm test`).
 
 ---
 
 ## Rubric
 
-| Criteria                               | Limited (0 pts)                                | Partial (10 pts)                                     | Complete (20 pts)                                                          |
-| -------------------------------------- | ---------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------- |
-| **Manual React Setup (Webpack/Babel)** | Build is broken or missing essential files     | Partially configured with errors or missing pieces   | Fully operational Webpack/Babel React project (compiles, runs, tested)     |
-| **Jest Installation & Config**         | No test script or Jest not installed correctly | Jest installed but incomplete config or usage        | Jest fully installed; `"test"` script in `package.json` runs successfully  |
-| **Basic Test Implementation**          | No test file or tests never run                | Test file exists but fails to run or incomplete test | At least one working test that shows pass/fail in the console              |
-| **Code Organization & Documentation**  | Disorganized files, unclear instructions       | Basic structure, missing some clarity in README      | Clear folder structure, helpful README (install, build, test instructions) |
+| Criteria                              | Limited (0 pts)                          | Partial (13 pts)                       | Complete (25 pts)                                                |
+| ------------------------------------- | ---------------------------------------- | -------------------------------------- | ---------------------------------------------------------------- |
+| **Custom React build setup**          | Build is broken or key files are missing | Build works but has configuration gaps | React project builds and runs cleanly                            |
+| **Jest installation & script**        | Jest missing or test script absent       | Jest installed but mis-configured      | Jest fully set up and `npm test` runs successfully               |
+| **Basic test implementation**         | No test file or tests never run          | Test file exists but fails to run      | At least one passing test visible in console                     |
+| **Code organization & documentation** | Disorganized files, unclear instructions | Basic structure, minimal README        | Clear folder structure and helpful README (install, build, test) |
