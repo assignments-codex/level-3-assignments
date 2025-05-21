@@ -41,8 +41,6 @@
 
   8. **Create a Repository**
      - Name it something like `react-jest-async`.
-  9. **Include**
-     - `webpack.config.js`, Babel config, `package.json`, the service file with the async function, and any test files.
 
   ***
 
