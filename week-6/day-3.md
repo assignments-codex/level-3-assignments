@@ -1,6 +1,6 @@
 ## Objective
 
-- Create a **new React project** with **Jest**.
+- Create a **new React project**.
 - Write and test an **asynchronous function** (e.g., a fetch call) using **mocks**.
 - Verify that at least **one test** checks the **async result** properly.
 
