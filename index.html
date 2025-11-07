@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <title>Navigator</title>
+    <link
+      rel="preconnect"
+      href="https://cdn.jsdelivr.net"
+    />
+    <style>
+      :root {
+        --bg: #0b0d10;
+        --panel: #12161b;
+        --text: #e6edf3;
+        --muted: #9aa4af;
+        --accent: #3b82f6;
+        --border: #242a32;
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #ffffff;
+          --panel: #f6f8fa;
+          --text: #0a0a0a;
+          --muted: #6b7280;
+          --accent: #2563eb;
+          --border: #e5e7eb;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji",
+          "Segoe UI Emoji";
+      }
+      .app {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        height: 100vh;
+      }
+      .sidebar {
+        border-right: 1px solid var(--border);
+        overflow: auto;
+        background: var(--panel);
+        padding: 16px;
+      }
+      .main {
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+      .topbar {
+        border-bottom: 1px solid var(--border);
+        background: var(--panel);
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .title {
+        font-weight: 600;
+      }
+      .content {
+        padding: 24px;
+        overflow: auto;
+      }
+      .brand {
+        font-weight: 700;
+        margin-right: auto;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .group {
+        margin: 10px 0 14px;
+      }
+      summary {
+        cursor: pointer;
+        list-style: none;
+        font-weight: 600;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      details {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 10px 12px;
+        background: transparent;
+      }
+      ul {
+        list-style: none;
+        margin: 8px 0 0;
+        padding: 0;
+      }
+      li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 4px;
+        border-radius: 8px;
+      }
+      li:hover {
+        background: rgba(127, 127, 127, 0.08);
+      }
+      .navlink {
+        flex: 1 1 auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .active {
+        font-weight: 700;
+      }
+      .pill {
+        font-size: 12px;
+        padding: 2px 8px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        color: var(--muted);
+      }
+      .controls {
+        display: flex;
+        gap: 8px;
+      }
+      button {
+        background: var(--accent);
+        color: #fff;
+        border: 0;
+        border-radius: 10px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      button.ghost {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+      .content h1:first-child,
+      .content h2:first-child,
+      .content h3:first-child {
+        margin-top: 0;
+      }
+      .content img {
+        max-width: 100%;
+        height: auto;
+      }
+      .content pre {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 16px;
+        border-radius: 10px;
+        overflow: auto;
+      }
+      .search {
+        width: 100%;
+        margin: 0 0 10px;
+      }
+      .search input {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--text);
+      }
+      .spacer {
+        flex: 1;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="controls">
+          <button id="homeBtn">README</button>
+          <button
+            id="resetBtn"
+            class="ghost"
+          >
+            Reset checks
+          </button>
+        </div>
+        <div class="search">
+          <input
+            id="filterInput"
+            placeholder="Filter files"
+          />
+        </div>
+        <div id="nav"></div>
+      </aside>
+      <section class="main">
+        <div class="topbar">
+          <div class="brand">Navigator</div>
+          <div
+            class="title"
+            id="fileTitle"
+          >
+            Select a file
+          </div>
+          <div class="spacer"></div>
+          <a
+            id="openRaw"
+            target="_blank"
+            rel="noopener"
+            >Open raw</a
+          >
+        </div>
+        <div
+          class="content"
+          id="content"
+        ></div>
+      </section>
+    </div>
+    <script>
+      const readmePath = "README.md";
+      const navEl = document.getElementById("nav");
+      const contentEl = document.getElementById("content");
+      const titleEl = document.getElementById("fileTitle");
+      const openRawEl = document.getElementById("openRaw");
+      const filterInput = document.getElementById("filterInput");
+      const homeBtn = document.getElementById("homeBtn");
+      const resetBtn = document.getElementById("resetBtn");
+      const storeKeyVisited = "mdVisited";
+      const storeKeyLast = "mdLast";
+      let visited = new Set(
+        JSON.parse(localStorage.getItem(storeKeyVisited) || "[]"),
+      );
+      let items = [];
+      let groups = [];
+      let activePath = "";
+      function saveVisited() {
+        localStorage.setItem(storeKeyVisited, JSON.stringify([...visited]));
+      }
+      function markVisited(path, checked = true) {
+        if (!path || path === readmePath) return;
+        if (checked) visited.add(path);
+        else visited.delete(path);
+        const cb = document.querySelector(
+          `input[data-path="${cssEscape(path)}"]`,
+        );
+        if (cb) cb.checked = checked;
+        updatePills();
+        saveVisited();
+      }
+      function cssEscape(s) {
+        return s.replace(/["\\]/g, "\\$&");
+      }
+      function parseLinks(md) {
+        const rx = /\[([^\]]+)\]\(([^)]+\.md)\)/g;
+        const list = [];
+        for (const m of md.matchAll(rx)) {
+          let href = m[2].trim();
+          if (href.startsWith("http")) continue;
+          href = href.replace(/#.*/, "");
+          list.push({ label: m[1].trim(), path: href });
+        }
+        return list;
+      }
+      function groupByWeek(list) {
+        const map = new Map();
+        for (const it of list) {
+          const wk = (it.path.match(/week-\d+/i) || ["other"])[0].toLowerCase();
+          if (!map.has(wk)) map.set(wk, []);
+          map.get(wk).push(it);
+        }
+        const out = [];
+        const nums = [...map.keys()]
+          .filter((k) => k.startsWith("week-"))
+          .map((k) => ({ k, n: parseInt(k.split("-")[1], 10) }))
+          .sort((a, b) => a.n - b.n);
+        for (const { k } of nums) out.push({ name: k, items: map.get(k) });
+        if (map.has("other"))
+          out.push({ name: "other", items: map.get("other") });
+        return out;
+      }
+      function renderNav() {
+        navEl.innerHTML = "";
+        for (const g of groups) {
+          const details = document.createElement("details");
+          details.className = "group";
+          details.open = true;
+          const summary = document.createElement("summary");
+          const left = document.createElement("span");
+          left.textContent = g.name.replace("week-", "Week ");
+          const pill = document.createElement("span");
+          pill.className = "pill";
+          pill.dataset.group = g.name;
+          summary.append(left, pill);
+          details.append(summary);
+          const ul = document.createElement("ul");
+          for (const it of g.items) {
+            const li = document.createElement("li");
+            const cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.dataset.path = it.path;
+            cb.checked = visited.has(it.path);
+            cb.addEventListener("change", (e) =>
+              markVisited(it.path, e.target.checked),
+            );
+            const a = document.createElement("a");
+            a.href = "#" + encodeURI(it.path);
+            a.className = "navlink";
+            a.textContent = it.path;
+            a.addEventListener("click", (e) => {
+              e.preventDefault();
+              navigate(it.path, true);
+            });
+            li.append(cb, a);
+            ul.append(li);
+          }
+          details.append(ul);
+          navEl.append(details);
+        }
+        updatePills();
+      }
+      function updatePills() {
+        for (const g of groups) {
+          const total = g.items.length;
+          const done = g.items.filter((it) => visited.has(it.path)).length;
+          const pill = navEl.querySelector(
+            `.pill[data-group="${cssEscape(g.name)}"]`,
+          );
+          if (pill) pill.textContent = done + "/" + total;
+        }
+        const links = navEl.querySelectorAll(".navlink");
+        links.forEach((a) =>
+          a.classList.toggle(
+            "active",
+            decodeURI(a.getAttribute("href").slice(1)) === activePath,
+          ),
+        );
+      }
+      async function loadMd(path) {
+        const res = await fetch(path, { cache: "no-store" });
+        if (!res.ok) throw new Error("Load failed");
+        const text = await res.text();
+        return text;
+      }
+      async function showContent(path) {
+        titleEl.textContent = path ? path : "README";
+        openRawEl.href = path ? path : readmePath;
+        let md;
+        if (!path) md = await loadMd(readmePath);
+        else md = await loadMd(path);
+        contentEl.innerHTML = marked.parse(md);
+      }
+      function buildDefaultList() {
+        const days = [
+          "day-1-breakout-task.md",
+          "day-2-breakout-task.md",
+          "day-3-assignment.md",
+          "day-4-breakout-task.md",
+          "day-5-assignment.md",
+        ];
+        const out = [];
+        for (let w = 1; w <= 8; w++) {
+          for (const d of days) out.push({ label: d, path: `week-${w}/${d}` });
+        }
+        return out;
+      }
+      async function navigate(path, setHash) {
+        if (setHash) location.hash = encodeURI(path);
+        activePath = path || "";
+        localStorage.setItem(storeKeyLast, activePath);
+        try {
+          await showContent(activePath);
+          if (activePath) markVisited(activePath, true);
+        } catch (e) {
+          contentEl.innerHTML = "<p>Could not load file.</p>";
+        } finally {
+          updatePills();
+        }
+      }
+      function applyFilter(q) {
+        const term = q.toLowerCase();
+        const items = navEl.querySelectorAll("li");
+        items.forEach((li) => {
+          const txt = li.querySelector(".navlink").textContent.toLowerCase();
+          li.style.display = txt.includes(term) ? "" : "none";
+        });
+      }
+      async function init() {
+        try {
+          const md = await loadMd(readmePath);
+          items = parseLinks(md);
+          groups = groupByWeek(items);
+          renderNav();
+        } catch (e) {
+          items = buildDefaultList();
+          groups = groupByWeek(items);
+          renderNav();
+        }
+        const hashPath = decodeURI(location.hash.replace(/^#/, ""));
+        const last = localStorage.getItem(storeKeyLast) || "";
+        const start = hashPath || last;
+        if (start) navigate(start, !hashPath);
+      }
+      window.addEventListener("hashchange", () => {
+        const p = decodeURI(location.hash.replace(/^#/, ""));
+        activePath = p;
+        navigate(p, false);
+      });
+      filterInput.addEventListener("input", (e) => applyFilter(e.target.value));
+      homeBtn.addEventListener("click", () => {
+        history.pushState("", "", "#");
+        navigate("", false);
+      });
+      resetBtn.addEventListener("click", () => {
+        visited.clear();
+        saveVisited();
+        updatePills();
+        const cbs = navEl.querySelectorAll('input[type="checkbox"]');
+        cbs.forEach((cb) => (cb.checked = false));
+      });
+      init();
+    </script>
+  </body>
+</html>
