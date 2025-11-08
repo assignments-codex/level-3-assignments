@@ -1,8 +1,10 @@
 #### Goal
-Test a utility function.
+
+Test a utility function and cover an edge case.
 
 #### Steps
+
 1. Complete what we built in lecture.
-2. Write tests for a pure function covering at least one edge case.
+2. Write tests for a pure function with one edge case.
 3. Extra practice if you want
-   - add a second test file
+   - write a small table of inputs and expected outputs

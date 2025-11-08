@@ -1,8 +1,11 @@
 #### Goal
-Add a loader or dev server.
+
+Add a loader or a dev server and source maps.
 
 #### Steps
+
 1. Complete what we built in lecture.
-2. Add either a static asset loader or a local dev server.
-3. Extra practice if you want
-   - enable source maps
+2. Choose one: static asset loader or local dev server.
+3. Enable source maps for easier debugging.
+4. Extra practice if you want
+   - add a minimal HTML template to load the bundle

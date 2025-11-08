@@ -1,8 +1,10 @@
 #### Goal
-Plan the project slice.
+
+Plan the project slice for a one week delivery.
 
 #### Steps
+
 1. Pick a feature and list routes, states, and data needs.
-2. Outline tasks for a one-week delivery.
+2. Outline tasks for this week and define done for the flow.
 3. Extra practice if you want
-   - add a simple risk and mitigation note
+   - note one risk and a simple mitigation

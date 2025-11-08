@@ -1,16 +1,22 @@
 #### Objective
-Feature iteration with a small refactor.
+
+Insert new rows from a controlled form and render the updated list.
 
 #### Requirements
-1. Extend an existing feature with one meaningful improvement.
-2. Refactor a component or hook to reduce duplication or re-renders.
-3. README lists the change and where to test it.
+
+1. Add a form that inserts a row via supabase-js on submit.
+2. Validate required fields and prevent submit when invalid.
+3. On success, refresh or append to the list so the new row is visible.
+4. Show a friendly message on failure and keep the form editable.
+5. README lists the table name and columns.
 
 #### Submission
+
 Git repo link [live URL if applicable]
 
 #### Rubric (20 pts)
-- Meets the objective 0–5
-- Improvement works and is visible 0–5
+
+- Form inserts a row 0–5
+- List updates after insert 0–5
 - Project runs from README 0–5
 - Code organization 0–5

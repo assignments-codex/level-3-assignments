@@ -1,15 +1,21 @@
 #### Objective
-Interview on Weeks 3–4 skills.
+
+Deploy the React + Supabase app and verify read and write in production.
 
 #### Requirements
-1. Live session with a TA or Instructor.
-2. Be ready to add a small route or state interaction and explain effect usage.
+
+1. Build and deploy the app. Set SUPABASE_URL and SUPABASE_ANON_KEY as environment variables on the host.
+2. Confirm list renders from the table and insert works on the live site.
+3. Show a friendly error or disabled state if the network call fails.
+4. README includes the live URL and a short note on environment variables.
 
 #### Submission
-Git repo link [live URL if applicable]
+
+Git repo link and live URL
 
 #### Rubric (20 pts)
-- Clear explanation of code and choices 0–5
-- Live task completed 0–5
+
+- Live read and write work 0–5
+- Error or disabled state present 0–5
 - Project runs from README 0–5
-- Communication within time 0–5
+- Code organization 0–5
