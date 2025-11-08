@@ -1,11 +1,13 @@
 #### Objective
 
-Interview on Weeks 5–6 skills.
+Interview on Weeks 5–6 testing skills.
 
 #### Requirements
 
 1. Live session with a TA or Instructor.
-2. Be ready to write a quick test and explain mocking or coverage.
+2. Be ready to write a quick test (utility or component) using Jest and React Testing Library.
+3. Be ready to mock a fetch or client call and verify loading and success states.
+4. Be ready to explain your coverage report and one change you made to stabilize selectors or timing.
 
 #### Submission
 

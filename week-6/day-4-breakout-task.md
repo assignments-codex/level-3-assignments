@@ -1,10 +1,11 @@
 #### Goal
 
-Stabilize flaky tests and selectors.
+Add coverage and snapshot where appropriate.
 
 #### Steps
 
 1. Complete what we built in lecture.
-2. Replace brittle selectors with role or text queries and fix timing with proper async utilities.
-3. Extra practice if you want
-   - document a brief test strategy in the README
+2. Add a coverage command and improve one low coverage area.
+3. If you choose to use a snapshot, target a stable output only. Update responsibly.
+4. Extra practice if you want
+   - set a small global threshold and reach it
