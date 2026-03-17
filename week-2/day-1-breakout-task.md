@@ -1,8 +1,12 @@
 #### Goal
-Initialize a bundler and prove an entry builds to a bundle.
+
+Initialize a Vite project and confirm the app runs in development and builds for production.
 
 #### Steps
+
 1. Complete what we built in lecture.
-2. Configure an entry file and an output bundle in dist.
-3. Extra practice if you want
-   - add separate scripts for dev and prod
+2. Create a Vite project and confirm the starter page loads in the browser.
+3. Run a production build and confirm files are generated in dist.
+4. Extra practice if you want
+   - change the starter content and page title
+   - identify index.html and the main entry inside src
