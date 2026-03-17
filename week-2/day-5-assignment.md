@@ -5,7 +5,9 @@ Interview on Weeks 1–2 skills.
 #### Requirements
 
 1. Live session with a TA or Instructor.
-2. Be ready to configure a basic bundler entry or explain the bundle flow, and write a small ES module on the spot.
+2. Be ready to explain a basic Vite project structure, including index.html, src, and the main entry.
+3. Be ready to run or explain the dev server, build, and preview flow, and make a small change in the app on the spot.
+4. Be ready to explain how Tailwind was set up and where the styles are loaded in the project.
 
 #### Submission
 
