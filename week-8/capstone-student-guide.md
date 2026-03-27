@@ -35,8 +35,7 @@ Checklist adapted from your capstone format so students know exactly what to hit
 1. Live site demo (about 2 min)
 2. Code walkthrough (about 3 to 4 min)
 3. Q and A on code (about 2 to 3 min)
-4. Live coding (about 3 to 4 min, no AI)
-   Follow the same flow you use elsewhere so students know what to expect.
+4. Live coding (about 3 to 4 min, no AI) Follow the same flow you use elsewhere so students know what to expect.
 
 ## Live-coding demonstration
 
@@ -71,13 +70,13 @@ This mirrors your submission style from other capstones.
 - Think aloud while coding
 - Quick self-check and adjust if needed
 
-2. Explaining code - 30
+1. Explaining code - 30
 
 - Design intent and trade offs
 - Data flow and state or error handling
 - Constraints and alternatives
 
-3. Presentation and professionalism - 20
+1. Presentation and professionalism - 20
 
 - Live link first and working demo
 - Clear communication and timing

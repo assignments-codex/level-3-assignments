@@ -7,8 +7,7 @@ Use on Friday. Interview flow and scoring match your standard capstone format.
 1. Live site demo: problem, solution, core flow
 2. Code walkthrough: selected files and decisions
 3. Q and A on code
-4. Live coding: one small Level 3 task (no AI)
-   Structure mirrors your existing evaluator guide so instructors can move fast.
+4. Live coding: one small Level 3 task (no AI) Structure mirrors your existing evaluator guide so instructors can move fast.
 
 ## Scoring (100 points)
 

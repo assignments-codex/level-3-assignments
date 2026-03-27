@@ -1,6 +1,6 @@
 #### Objective
 
-Interview on Weeks 5–6 testing skills.
+Interview on Weeks 5-6 testing skills.
 
 #### Requirements
 
@@ -15,7 +15,7 @@ Git repo link
 
 #### Rubric (20 pts)
 
-- Clear explanation of code and choices 0–5
-- Live task completed 0–5
-- Project runs from README 0–5
-- Communication within time 0–5
+- Clear explanation of code and choices 0-5
+- Live task completed 0-5
+- Project runs from README 0-5
+- Communication within time 0-5

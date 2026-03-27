@@ -16,7 +16,7 @@ Git repo link [live URL if applicable]
 
 #### Rubric (20 pts)
 
-- Form inserts a row 0–5
-- List updates after insert 0–5
-- Project runs from README 0–5
-- Code organization 0–5
+- Form inserts a row 0-5
+- List updates after insert 0-5
+- Project runs from README 0-5
+- Code organization 0-5

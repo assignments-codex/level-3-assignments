@@ -15,7 +15,7 @@ Git repo link and live URL
 
 #### Rubric (20 pts)
 
-- Live build works 0–5
-- Routes work in production 0–5
-- Project runs from README 0–5
-- Code organization 0–5
+- Live build works 0-5
+- Routes work in production 0-5
+- Project runs from README 0-5
+- Code organization 0-5

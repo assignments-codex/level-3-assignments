@@ -13,7 +13,7 @@ Git repo link [live URL if applicable]
 
 #### Rubric (20 pts)
 
-- Meets the objective 0–5
-- Release notes clear 0–5
-- Project runs from README 0–5
-- Code organization 0–5
+- Meets the objective 0-5
+- Release notes clear 0-5
+- Project runs from README 0-5
+- Code organization 0-5
