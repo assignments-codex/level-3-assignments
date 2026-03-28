@@ -1,22 +1,24 @@
 #### Objective
 
-Insert new rows from a controlled form and render the updated list.
+Build a React feature that reads from and adds data to your database.
 
 #### Requirements
 
-1. Add a form that inserts a row via supabase-js on submit.
-2. Validate required fields and prevent submit when invalid.
-3. On success, refresh or append to the list so the new row is visible.
-4. Show a friendly message on failure and keep the form editable.
-5. README lists the table name and columns.
+1. Connect your app to the database service used in class.
+2. Read rows from one table and display them.
+3. Add a form that inserts a new row.
+4. Show the new row in the app.
+5. Include a short README that explains:
+   - what data your app stores
+   - how to run the app
 
 #### Submission
 
-Git repo link [live URL if applicable]
+GitHub repo link
 
 #### Rubric (20 pts)
 
-- Form inserts a row 0-5
-- List updates after insert 0-5
-- Project runs from README 0-5
-- Code organization 0-5
+- Meets the objective 0-5
+- Data is read correctly 0-5
+- New data is added correctly 0-5
+- Code is organized and readable 0-5

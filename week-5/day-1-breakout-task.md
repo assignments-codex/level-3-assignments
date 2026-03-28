@@ -1,12 +1,17 @@
 #### Goal
 
-Set up SASS and establish design tokens.
+Get more practice with props and state by splitting your app into smaller components.
 
 #### Steps
 
 1. Complete what we built in lecture.
-2. Install and wire SASS. Create a tokens partial for color, spacing, and type. Import it into your main stylesheet.
-3. Apply tokens to base elements and a layout container.
-4. Extra practice if you want
-   - add per-component SASS partials and import order
-   - add a build script and a watch script for SASS
+2. Find one larger part of your app and break it into smaller components.
+3. Pass props into those components.
+4. Keep state in the parent where it makes the most sense.
+5. Be ready to explain how data moves through your app.
+
+#### Extra practice if you want
+
+- Create a shared card component.
+- Create a reusable button component.
+- Add one more prop to an existing component.

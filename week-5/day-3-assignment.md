@@ -1,21 +1,25 @@
 #### Objective
 
-Integrate a component library and produce reusable UI.
+Build a React feature that uses components, props, state, and a controlled form together.
 
 #### Requirements
 
-1. Install a React component library. Use at least two components in your app.
-2. Override styles with your SASS tokens where appropriate.
-3. Build two reusable UI pieces such as Button and Card and use each in at least two places.
-4. README shows how to install, run, and where to see the components.
+1. Use at least three components.
+2. Pass props between components.
+3. Use state in at least one parent component.
+4. Add a controlled form.
+5. Use the submitted form data somewhere in the app.
+6. Include a short README that explains:
+   - what the feature does
+   - how to run the app
 
 #### Submission
 
-Git repo link
+GitHub repo link
 
 #### Rubric (20 pts)
 
 - Meets the objective 0-5
-- Components reused and styled consistently 0-5
-- Project runs from README 0-5
-- Code organization 0-5
+- Components and props are used correctly 0-5
+- State and form handling work correctly 0-5
+- Code is organized and readable 0-5

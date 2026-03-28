@@ -1,22 +1,25 @@
 #### Objective
 
-Ship a feature slice that proves routing, state, and effect.
+Build a React app that gets data from an API and lets the user interact with it.
 
 #### Requirements
 
-1. At least two routes and a shared layout wrapper.
-2. One stateful component that updates its view from user input.
-3. One effect that fetches data and renders loading and error states.
-4. One small transform (map, filter, or reduce) applied before rendering.
-5. README shows install, start, and where to view the feature.
+1. Use `useEffect` to fetch data from an API.
+2. Store the data in state.
+3. Render the data on the page.
+4. Add one input or button that changes what the user sees.
+5. Keep the app simple and easy to explain.
+6. Include a short README that explains:
+   - what the app does
+   - how to run the app
 
 #### Submission
 
-Git repo link [live URL if applicable]
+GitHub repo link
 
 #### Rubric (20 pts)
 
 - Meets the objective 0-5
-- Correct behavior and states 0-5
-- Project runs from README 0-5
-- Code organization 0-5
+- API data is fetched correctly 0-5
+- State and user interaction work correctly 0-5
+- Code is organized and readable 0-5

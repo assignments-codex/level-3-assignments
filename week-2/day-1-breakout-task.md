@@ -1,12 +1,20 @@
 #### Goal
 
-Initialize a Vite project and confirm the app runs in development and builds for production.
+Start a React app with Vite and learn the basic file flow of a React project.
 
 #### Steps
 
 1. Complete what we built in lecture.
-2. Create a Vite project and confirm the starter page loads in the browser.
-3. Run a production build and confirm files are generated in dist.
-4. Extra practice if you want
-   - change the starter content and page title
-   - identify index.html and the main entry inside src
+2. Create a React app with Vite.
+3. Find these files and be ready to explain what they do:
+   - `main.jsx`
+   - `App.jsx`
+   - your CSS file
+4. Replace the starter content with your own heading, paragraph, and button.
+5. Create simple `Header`, `Main`, and `Footer` components and render them in `App`.
+
+#### Extra practice if you want
+
+- Add a second paragraph to `Main`.
+- Pass a title into `Header` with props.
+- Change the page title.

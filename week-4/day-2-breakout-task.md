@@ -1,12 +1,17 @@
 #### Goal
 
-Connect @supabase/supabase-js in React and read rows into a list.
+Connect your React app to the database and read data into the page.
 
 #### Steps
 
 1. Complete what we built in lecture.
-2. Create a small client module that exports a configured Supabase client.
-3. In a page or component, fetch rows from your table in an effect and render a list with keys.
-4. Show three states: loading, error, and empty.
-5. Extra practice if you want
-   - extract the fetch into a small data function (for example, data/items.js)
+2. Add the client library for the database service used in class.
+3. Create one file that sets up the connection.
+4. Read rows from your table and render them in React.
+5. Keep the page simple and focused on showing the data.
+
+#### Extra practice if you want
+
+- Render the data in cards instead of a list.
+- Sort the rows before showing them.
+- Add a message when the table is empty.

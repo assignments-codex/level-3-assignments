@@ -1,21 +1,25 @@
 #### Objective
 
-Deploy the SPA and confirm client-side routing works in production.
+Build a small multi-page React app that uses API data.
 
 #### Requirements
 
-1. Produce a production build and deploy to a host of your choice.
-2. App renders without client-side errors and both routes work.
-3. Configure a route fallback if your host requires it (for example, redirect unknown paths to index.html).
-4. README includes deploy steps and the live URL.
+1. Use routing for at least two pages.
+2. Use `useEffect` to fetch data from an API.
+3. Show the data on one page.
+4. Add one user interaction such as search, filter, or a button that changes the view.
+5. Keep the app simple and easy to explain.
+6. Include a short README that explains:
+   - what the app does
+   - how to run the app
 
 #### Submission
 
-Git repo link and live URL
+GitHub repo link
 
 #### Rubric (20 pts)
 
-- Live build works 0-5
-- Routes work in production 0-5
-- Project runs from README 0-5
-- Code organization 0-5
+- Meets the objective 0-5
+- Routes work correctly 0-5
+- API data and interaction work correctly 0-5
+- Code is organized and readable 0-5

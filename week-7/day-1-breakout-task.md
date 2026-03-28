@@ -1,10 +1,17 @@
 #### Goal
 
-Plan the project slice for a one week delivery.
+Practice bringing React pieces together in one new project.
 
 #### Steps
 
-1. Pick a feature and list routes, states, and data needs.
-2. Outline tasks for this week and define done for the flow.
-3. Extra practice if you want
-   - note one risk and a simple mitigation
+1. Complete what we built in lecture.
+2. Create a new React app for this week's project.
+3. Plan one clear user flow for the app.
+4. Set up the main components, routes, and data you will need.
+5. Keep the scope small enough that the core feature can be finished this week.
+
+#### Extra practice if you want
+
+- Sketch the layout before building.
+- Make a short checklist of features.
+- Reuse ideas or patterns from older work in a new way.

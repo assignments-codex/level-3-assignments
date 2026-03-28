@@ -1,21 +1,26 @@
 #### Objective
 
-Build a small Vite project with Tailwind styling.
+Build a small React app that shows you understand components, props, and `useState`.
 
 #### Requirements
 
-1. Create a Vite project with source files in src and a working browser entry.
-2. Set up Tailwind and use utility classes to style at least one layout section.
-3. Render one visible result in the page and run a production build that outputs files in dist.
-4. README shows how to install, run the dev server, and build the project.
+1. Create a React app with Vite.
+2. Build at least three components.
+3. Pass props into at least two components.
+4. Use `useState` in at least one component.
+5. Add one button or event that changes the page.
+6. Include a short README that explains:
+   - what the app does
+   - how to install dependencies
+   - how to run the app
 
 #### Submission
 
-Git repo link
+GitHub repo link
 
 #### Rubric (20 pts)
 
 - Meets the objective 0-5
-- App runs as described 0-5
-- Project runs from README 0-5
-- Code organization 0-5
+- Components and props are used correctly 0-5
+- State and events work correctly 0-5
+- Code is organized and readable 0-5

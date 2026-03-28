@@ -1,14 +1,17 @@
 #### Goal
 
-Create a Supabase project and one table for your app data.
+Create the database project used in class and understand the data your app will store.
 
 #### Steps
 
-1. Create a Supabase project. In the SQL editor or Table Editor, create one table with:
-   - id (uuid or bigint), primary key
-   - title (text)
-   - created\_at (timestamp default now()) or similar timestamp
-2. Insert two rows as seed data.
-3. Add SUPABASE\_URL and SUPABASE\_ANON\_KEY to your React app environment and document where to put them in README.
-4. Extra practice if you want
-   - add a boolean column (completed) and seed one true, one false
+1. Complete what we built in lecture.
+2. Create the database project used in class.
+3. Create one table for your app data.
+4. Add a few rows so you have data to work with.
+5. Be ready to explain what each column is for.
+
+#### Extra practice if you want
+
+- Add a status column.
+- Add a created date column.
+- Add a second table if it supports your app idea.

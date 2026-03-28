@@ -1,12 +1,17 @@
 #### Goal
 
-Finish the React skeleton with routing and one stateful component that updates from user input.
+Use `useEffect` to get data from an API and show it in your React app.
 
 #### Steps
 
 1. Complete what we built in lecture.
-2. Add routes for "/" and "/about" with a shared layout wrapper.
-3. Create a stateful component that updates its view on a button click.
-4. Extra practice if you want
-   - add a NotFound route for unknown paths
-   - lift one piece of state to the layout and pass as props
+2. Fetch data from a simple public API.
+3. Store the data in state.
+4. Use `useEffect` so the data loads when the page opens.
+5. Render the data on the page as cards, a list, or simple sections.
+
+#### Extra practice if you want
+
+- Add a loading message.
+- Add a simple message for when no data is returned.
+- Create a second component to display one item.

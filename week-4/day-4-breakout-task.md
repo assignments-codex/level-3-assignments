@@ -1,12 +1,17 @@
 #### Goal
 
-Update and delete rows with clear status and a visible result.
+Practice updating and deleting data in your app.
 
 #### Steps
 
 1. Complete what we built in lecture.
-2. Add either an inline edit or a toggle and persist it with an update call.
-3. Add a delete action that removes a row and refreshes the view.
-4. Show a short status while the request is in flight and a result when complete.
-5. Extra practice if you want
-   - centralize data calls in a small service module and keep components focused on rendering
+2. Add a way to update one field in a row.
+3. Add a way to delete a row.
+4. Make sure the page shows the current data after each action.
+5. Keep the UI simple and easy to explain.
+
+#### Extra practice if you want
+
+- Add a confirmation message before delete.
+- Add a small success message after update.
+- Add a simple filter such as active or completed.

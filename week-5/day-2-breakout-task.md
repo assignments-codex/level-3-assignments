@@ -1,12 +1,17 @@
 #### Goal
 
-Add animations with CSS transitions and an optional Framer Motion effect.
+Practice controlled forms and updating the screen with user input.
 
 #### Steps
 
 1. Complete what we built in lecture.
-2. Add a CSS transition or keyframe to a visible element. Demonstrate enter or hover motion.
-3. If using Framer Motion, animate a mount or route change with a fade or slide.
-4. Extra practice if you want
-   - prefer transform and opacity for smooth motion
-   - add a reduced motion check for accessibility
+2. Build a form with at least two inputs.
+3. Store the input values in state.
+4. On submit, use the form data in your app.
+5. Keep the result simple and easy to explain.
+
+#### Extra practice if you want
+
+- Reset the form after submit.
+- Add a select input.
+- Show a small message after submit.

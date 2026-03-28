@@ -1,11 +1,17 @@
 #### Goal
 
-Set up Jest and React Testing Library and run a first passing test.
+Practice the read side of a React app with real data.
 
 #### Steps
 
 1. Complete what we built in lecture.
-2. Configure test scripts in package.json and verify Jest runs.
-3. Add React Testing Library and write a smoke test for a component.
-4. Extra practice if you want
-   - add a utilities test for a pure function
+2. Connect your app to the data source used in class.
+3. Display a list of records on the page.
+4. Add one detail view, selected view, or expanded card view.
+5. Be ready to explain how the data gets from the source into your components.
+
+#### Extra practice if you want
+
+- Add loading text.
+- Add an empty state message.
+- Add a second component for the list items.
